@@ -24,6 +24,7 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency "pry-byebug", "3.1.0"
   gem.add_development_dependency "rake", "10.5.0"
+  gem.add_development_dependency "minitest"
 
   gem.metadata['allowed_push_host'] = 'http://gem.sdk.wooga.com'
   gem.required_ruby_version = "~> 2.0"

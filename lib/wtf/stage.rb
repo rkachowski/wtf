@@ -1,11 +1,13 @@
 module Wtf
-  class Stage < Thor
-    include Thor::Actions
+  class Stage
+    attr_reader :options
+
 
     @@current_stage = ""
 
-    def initialize
+    def initialize options
       @@current_stage = self.class.to_s
+      @options = options
     end
 
     def header
@@ -35,12 +37,18 @@ module Wtf
       failure_reason = setup
 
       if failure_reason
-        abort "Failed to start stage #{@@current_stage} - #{failure_reason}"
+        msg = "Failed to start stage #{@@current_stage} - #{failure_reason}"
+        if options[:no_abort]
+          raise msg
+        else
+          abort msg
+        end
       end
 
       perform
       teardown
     end
+
   end
 
 end

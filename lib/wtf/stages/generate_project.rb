@@ -12,7 +12,7 @@ module Wtf
     end
 
     def perform
-      Unity.run "-buildTarget '#{options[:name]}'"
+      Unity.run "-createProject '#{options[:name]}'"
     end
   end
 end
