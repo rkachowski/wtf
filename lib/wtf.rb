@@ -14,9 +14,10 @@ require_relative "wtf/misc"
 module Wtf
   @@log = Logger.new(STDOUT)
   @@log.formatter = proc do |severity, datetime, progname, msg|
-    "#{severity}: #{msg}\n"
+    "#{msg}\n"
   end
   @@log.level = Logger::Severity::DEBUG
+  Wooget.log = @@log
 
   def self.log
     @@log

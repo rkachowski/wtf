@@ -30,11 +30,22 @@ describe Wtf do
         #setup example dir structure
         `tar -xzf #{TEST_LIB} `
         `tar -xzf #{TEST_PROJ} -C Wooga.SDK.Logging/unity3d/CITests`
-
-        bootstrapper = InstallDependencies.new project:File.join(tmpdir, "Wooga.SDK.Logging/unity3d/CITests/TestProject")
+        project_dir = File.join(tmpdir, "Wooga.SDK.Logging/unity3d/CITests/TestProject")
+        bootstrapper = InstallDependencies.new(project_dir, "Wooga.SDK.Logging")
 
         assert_nil bootstrapper.setup, "Should setup without errors"
-        assert_equal File.join(tmpdir,"Wooga.SDK.Logging"), bootstrapper.parent_dir, "Should detect package dir correctly"
+        assert_equal File.join(tmpdir,"Wooga.SDK.Logging"), bootstrapper.parent_package, "Should detect package dir correctly"
+
+        bootstrapper.perform
+
+        assert File.exists?(File.join(project_dir, "Assets/delete_me")), "Should have copied files"
+
+        assert File.exists?(File.join(project_dir, "paket.dependencies")), "Should have wooget bootstrapped project"
+        assert File.exists?(File.join(project_dir, "paket.unity3d.references")), "Should have wooget bootstrapped project"
+        assert File.exists?(File.join(project_dir, "paket.lock")), "Should have wooget bootstrapped project"
+
+
+        assert File.open(File.join(project_dir, "paket.dependencies")).read.include?("nuget Wooga.SDK.Logging"), "Parent package should be added as dependency"
       end
     end
   end
