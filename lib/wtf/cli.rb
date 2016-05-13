@@ -8,5 +8,7 @@ module Wtf
       p = GenerateProject.new name:name
       p.execute
     end
+
+
   end
 end

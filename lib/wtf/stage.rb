@@ -2,8 +2,11 @@ module Wtf
   class Stage
     attr_reader :options
 
-
     @@current_stage = ""
+
+    def self.current_stage
+      @@current_stage.split(":").last
+    end
 
     def initialize options
       @@current_stage = self.class.to_s
@@ -11,7 +14,7 @@ module Wtf
     end
 
     def header
-      name = self.class.to_s
+      name = Wtf::Util.camel_to_spaced self.class.name
 
       "\n" +
       "#" * name.length +
