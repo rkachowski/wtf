@@ -39,13 +39,25 @@ module Wtf
       set_parent_dependency
 
       if options[:test]
-        #copy tests from parent
-        #add test package dep
+        copy_test_files
+        set_unittest_dependency
       end
-      if verbose
-        #log dependencies
-      end
+
       install
+    end
+
+    def set_unittest_dependency
+      Util.append_to_file File.join(@project,"paket.dependencies"), "\nnuget Wooga.EAUnit.Unity3D.Source"
+    end
+
+    def copy_test_files
+      files = Dir[File.join(@parent_package,"tests","**/*.cs")]
+      files.delete_if {|f| f =~ /AssemblyInfo/}
+      test_dir = File.join(@project, "Assets/Tests")
+
+      Wtf.log.info "Copying test files #{files} to #{test_dir}"
+      Dir.mkdir(test_dir) unless Dir.exists? test_dir
+      files.each { |f| FileUtils.cp_r(f,test_dir)}
     end
 
     def copy_additional_files
@@ -70,7 +82,7 @@ module Wtf
 
     def install
       Dir.chdir(@project) do
-        cli = Wooget::CLI.new
+        cli = Wooget::CLI.new [], quiet:true
         cli.install @test_package
       end
     end

@@ -124,6 +124,6 @@
     <orderEntry type="library" scope="PROVIDED" name="slop (v3.6.0, RVM: ruby-2.3.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="thor (v0.19.1, RVM: ruby-2.3.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="wooga_uvm (v0.2.0, RVM: ruby-2.3.0) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="wooga_wooget (v2.0.5, RVM: ruby-2.3.0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="wooga_wooget (v2.0.6, RVM: ruby-2.3.0) [gem]" level="application" />
   </component>
 </module>

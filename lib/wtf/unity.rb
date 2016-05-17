@@ -12,7 +12,7 @@ module Wtf
       Wtf.log.info to_run
 
       result = `#{to_run}`
-      result
+      [$?.exitstatus, result]
     end
 
   end

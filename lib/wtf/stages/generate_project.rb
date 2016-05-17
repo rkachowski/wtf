@@ -5,14 +5,15 @@ module Wtf
       `type /Applications/Unity/Unity.app/Contents/MacOS/Unity`
       default_path_found = $?.exitstatus == 0
       unless default_path_found
-        return fail("Couldn't find unity installation")
+        fail("Couldn't find unity installation")
+        return
       end
-
-      nil
-    end
+   end
 
     def perform
-      Unity.run "-createProject '#{options[:name]}'"
+      exitstatus, log = Unity.run "-createProject '#{options[:name]}'"
+
+      fail(log) unless exitstatus == 0
     end
   end
 end

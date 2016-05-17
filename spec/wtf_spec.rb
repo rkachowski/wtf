@@ -31,7 +31,7 @@ describe Wtf do
         `tar -xzf #{TEST_LIB} `
         `tar -xzf #{TEST_PROJ} -C Wooga.SDK.Logging/unity3d/CITests`
         project_dir = File.join(tmpdir, "Wooga.SDK.Logging/unity3d/CITests/TestProject")
-        bootstrapper = InstallDependencies.new(project_dir, "Wooga.SDK.Logging")
+        bootstrapper = InstallDependencies.new(project_dir, "Wooga.SDK.Logging", test: true)
 
         assert_nil bootstrapper.setup, "Should setup without errors"
         assert_equal File.join(tmpdir,"Wooga.SDK.Logging"), bootstrapper.parent_package, "Should detect package dir correctly"
@@ -45,6 +45,9 @@ describe Wtf do
         assert File.exists?(File.join(project_dir, "paket.lock")), "Should have wooget bootstrapped project"
 
         assert File.open(File.join(project_dir, "paket.dependencies")).read.include?("nuget Wooga.SDK.Logging"), "Parent package should be added as dependency"
+
+        assert File.exists?(File.join(project_dir, "Assets", "Paket.Unity3D","Wooga.SDK.Logging")), "Parent package should be installed"
+        assert File.exists?(File.join(project_dir, "Assets", "Tests","LogTests.cs")), "Test file should be copied from package"
       end
     end
   end
