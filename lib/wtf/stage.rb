@@ -18,18 +18,21 @@ module Wtf
     end
 
     def header
-      name = Wtf::Util.camel_to_spaced self.class.name
+      name = stage_name
 
       "\n" +
-      "#" * name.length +
-      "#" + name +
-      "#" * name.length +
+      "##" * name.length + "\n" +
+      "# " + name + "\n" +
+      "##" * name.length + "\n" +
       "\n"
     end
 
+    def stage_name
+      Wtf::Util.camel_to_spaced self.class.name.split(":").last
+    end
 
     def setup
-      
+
     end
 
     def perform
@@ -47,7 +50,7 @@ module Wtf
     def fail msg
       method_name = caller_locations(1,1)[0].label
 
-      @failure_message = "#{method_name.capitalize} failed - #{msg}"
+      @failure_message = "[wtf failure] #{stage_name} #{method_name.capitalize} failed - #{msg}"
     end
 
     def execute

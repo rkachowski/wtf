@@ -8,7 +8,7 @@ module Wtf
         fail("Couldn't find unity installation")
         return
       end
-   end
+    end
 
     def perform
       exitstatus, log = Unity.run "-createProject '#{options[:name]}'"

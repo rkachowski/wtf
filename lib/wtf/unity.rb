@@ -12,8 +12,15 @@ module Wtf
       Wtf.log.info to_run
 
       result = `#{to_run}`
-      [$?.exitstatus, result]
+      [$?.exitstatus, result, run_logname]
     end
 
+    def self.failure_reason logfile
+      log = File.open(logfile).read.lines
+      failure_start = log.find_index { |l| l =~ /compilationhadfailure: True/ }
+      error = log.slice(failure_start..-1)
+      failure_end = error.find_index { |l| l =~ /EndCompilerOutput/ }
+      error.slice(0,failure_end).shift.join
+    end
   end
 end

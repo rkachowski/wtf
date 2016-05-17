@@ -4,6 +4,7 @@ include Wtf
 
 TEST_LIB = File.join(File.dirname(__FILE__),"ExampleLib.tar.gz")
 TEST_PROJ = File.join(File.dirname(__FILE__),"UnityProj.tar.gz")
+TEST_EDITOR_FAIL = File.join(File.dirname(__FILE__),"EditorBuildFailure.tar.gz")
 
 describe Wtf do
   before(:all) do
@@ -51,5 +52,17 @@ describe Wtf do
       end
     end
   end
+
+  it "detects editor failure correctly" do
+    Dir.mktmpdir do |tmpdir|
+      Dir.chdir(tmpdir) do
+        `tar -xzf #{TEST_EDITOR_FAIL}`
+        project_dir = File.join(tmpdir, "Wooga.SDK.Logging/unity3d/CITests/TestProject")
+
+
+      end
+    end
+  end
+
 end
 
