@@ -5,7 +5,7 @@ module Wtf
       `type /Applications/Unity/Unity.app/Contents/MacOS/Unity`
       default_path_found = $?.exitstatus == 0
       unless default_path_found
-        return "Couldn't find unity installation"
+        return fail("Couldn't find unity installation")
       end
 
       nil

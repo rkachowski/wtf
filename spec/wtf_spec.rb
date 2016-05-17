@@ -44,7 +44,6 @@ describe Wtf do
         assert File.exists?(File.join(project_dir, "paket.unity3d.references")), "Should have wooget bootstrapped project"
         assert File.exists?(File.join(project_dir, "paket.lock")), "Should have wooget bootstrapped project"
 
-
         assert File.open(File.join(project_dir, "paket.dependencies")).read.include?("nuget Wooga.SDK.Logging"), "Parent package should be added as dependency"
       end
     end

@@ -15,7 +15,7 @@ module Wtf
     def setup
       #provided path should point to a unity project dir
       unless @project and Wooget::Util.is_a_unity_project_dir(@project)
-        return "Couldn't find a unity project at provided path '#{@project}"
+        return fail("Couldn't find a unity project at provided path '#{@project}")
       end
 
       #there should be a wooget package dir in a parent dir
@@ -29,10 +29,8 @@ module Wtf
       end
 
       unless @parent_package
-        return "Couldn't find a parent wooget package dir in #{@project}"
+        return fail("Couldn't find a parent wooget package dir in #{@project}")
       end
-
-      nil
     end
 
     def perform
@@ -44,7 +42,9 @@ module Wtf
         #copy tests from parent
         #add test package dep
       end
-
+      if verbose
+        #log dependencies
+      end
       install
     end
 
@@ -66,12 +66,13 @@ module Wtf
 
     def set_parent_dependency
       Util.prepend_to_file File.join(@project,"paket.dependencies"), "source #{File.join(@parent_package,"bin")}\n"
-      Util.append_to_file File.join(@project,"paket.dependencies"), "nuget #{@test_package}"
     end
 
     def install
-
-
+      Dir.chdir(@project) do
+        cli = Wooget::CLI.new
+        cli.install @test_package
+      end
     end
   end
 end
