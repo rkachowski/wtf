@@ -60,6 +60,7 @@ describe Wtf do
         project_dir = File.join(tmpdir, "Wooga.SDK.Logging/unity3d/CITests/TestProject")
 
 
+
       end
     end
   end

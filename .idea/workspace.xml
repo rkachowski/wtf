@@ -2,14 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5fbe5c8a-ec64-4604-9f2f-68b53c77614a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/spec/EditorBuildFailure.tar.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/wtf/stages/build_editor_assembly.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/wtf/cli.rb" afterPath="$PROJECT_DIR$/lib/wtf/cli.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/wtf/stage.rb" afterPath="$PROJECT_DIR$/lib/wtf/stage.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/wtf/stages/generate_project.rb" afterPath="$PROJECT_DIR$/lib/wtf/stages/generate_project.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/wtf/unity.rb" afterPath="$PROJECT_DIR$/lib/wtf/unity.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/wtf/stages/install_dependencies.rb" afterPath="$PROJECT_DIR$/lib/wtf/stages/install_dependencies.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/wtf_spec.rb" afterPath="$PROJECT_DIR$/spec/wtf_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wtf.gemspec" afterPath="$PROJECT_DIR$/wtf.gemspec" />
     </list>
     <ignored path="wtf.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -62,18 +60,18 @@
       <file leaf-file-name="cli.rb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/wtf/cli.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2173913">
-              <caret line="9" column="57" selection-start-line="9" selection-start-column="57" selection-end-line="9" selection-end-column="57" />
+            <state vertical-scroll-proportion="0.12077295">
+              <caret line="5" column="113" selection-start-line="5" selection-start-column="113" selection-end-line="5" selection-end-column="113" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="stage.rb" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/wtf/stage.rb">
+      <file leaf-file-name="wtf.gemspec" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wtf.gemspec">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="41" column="16" selection-start-line="41" selection-start-column="16" selection-end-line="41" selection-end-column="16" />
+              <caret line="8" column="89" selection-start-line="8" selection-start-column="89" selection-end-line="8" selection-end-column="89" />
               <folding />
             </state>
           </provider>
@@ -83,7 +81,7 @@
         <entry file="file://$PROJECT_DIR$/lib/wtf/stages/generate_project.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+              <caret line="5" column="45" selection-start-line="5" selection-start-column="45" selection-end-line="5" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -93,17 +91,17 @@
         <entry file="file://$PROJECT_DIR$/lib/wtf/stages/install_dependencies.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="7" column="26" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="26" />
+              <caret line="12" column="7" selection-start-line="12" selection-start-column="7" selection-end-line="12" selection-end-column="7" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="unity.rb" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/wtf/unity.rb">
+        <entry file="file://$USER_HOME$/.rvm/gems/ruby-2.3.0/gems/wooga_wooget-2.0.6/lib/wooget/template/unity.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+              <caret line="34" column="8" selection-start-line="34" selection-start-column="8" selection-end-line="34" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -137,16 +135,17 @@
         <option value="$PROJECT_DIR$/lib/wtf/version.rb" />
         <option value="$USER_HOME$/.rvm/gems/ruby-2.3.0/gems/wooga_wooget-2.0.4/lib/wooget/util/misc.rb" />
         <option value="$PROJECT_DIR$/bin/wtf" />
-        <option value="$PROJECT_DIR$/wtf.gemspec" />
         <option value="$PROJECT_DIR$/lib/wtf.rb" />
         <option value="$PROJECT_DIR$/lib/wtf/misc.rb" />
         <option value="$USER_HOME$/.rvm/gems/ruby-2.3.0/gems/wooga_wooget-2.0.5/lib/wooget/template/unity.rb" />
-        <option value="$PROJECT_DIR$/lib/wtf/stages/install_dependencies.rb" />
         <option value="$PROJECT_DIR$/lib/wtf/stage.rb" />
         <option value="$PROJECT_DIR$/lib/wtf/unity.rb" />
         <option value="$PROJECT_DIR$/lib/wtf/stages/build_editor_assembly.rb" />
-        <option value="$PROJECT_DIR$/spec/wtf_spec.rb" />
+        <option value="$PROJECT_DIR$/wtf.gemspec" />
         <option value="$PROJECT_DIR$/lib/wtf/stages/generate_project.rb" />
+        <option value="$PROJECT_DIR$/spec/wtf_spec.rb" />
+        <option value="$USER_HOME$/.rvm/gems/ruby-2.3.0/gems/wooga_wooget-2.0.6/lib/wooget/cli.rb" />
+        <option value="$PROJECT_DIR$/lib/wtf/stages/install_dependencies.rb" />
         <option value="$PROJECT_DIR$/lib/wtf/cli.rb" />
       </list>
     </option>
@@ -713,13 +712,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wtf.gemspec">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.rvm/gems/ruby-2.3.0/gems/wooga_wooget-2.0.4/lib/wooget/util/misc.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.31400967">
@@ -739,6 +731,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="250" column="10" selection-start-line="250" selection-start-column="10" selection-end-line="250" selection-end-column="10" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -761,14 +754,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="97" column="10" selection-start-line="97" selection-start-column="10" selection-end-line="97" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.rvm/gems/ruby-2.3.0/gems/thor-0.19.1/lib/thor/actions.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.014218009">
-          <caret line="84" column="0" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -861,10 +846,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/wtf/stages/build_editor_assembly.rb">
+    <entry file="file://$PROJECT_DIR$/lib/wtf/stage.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <caret line="41" column="16" selection-start-line="41" selection-start-column="16" selection-end-line="41" selection-end-column="16" />
           <folding />
         </state>
       </provider>
@@ -885,10 +870,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/wtf/stages/generate_project.rb">
+    <entry file="file://$USER_HOME$/.rvm/gems/ruby-2.3.0/gems/thor-0.19.1/lib/thor/actions.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="73" column="8" selection-start-line="73" selection-start-column="8" selection-end-line="73" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/wtf/stages/build_editor_assembly.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.rvm/gems/ruby-2.3.0/gems/wooga_wooget-2.0.6/lib/wooget/paket.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7004831">
+          <caret line="42" column="7" selection-start-line="42" selection-start-column="7" selection-end-line="42" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.rvm/gems/ruby-2.3.0/gems/wooga_wooget-2.0.6/lib/wooget/cli.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.84541065">
+          <caret line="81" column="18" selection-start-line="81" selection-start-column="18" selection-end-line="81" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.rvm/gems/ruby-2.3.0/gems/wooga_wooget-2.0.6/lib/wooget/template/unity.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="34" column="8" selection-start-line="34" selection-start-column="8" selection-end-line="34" selection-end-column="8" />
           <folding />
         </state>
       </provider>
@@ -896,23 +913,31 @@
     <entry file="file://$PROJECT_DIR$/lib/wtf/stages/install_dependencies.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="26" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="26" />
+          <caret line="12" column="7" selection-start-line="12" selection-start-column="7" selection-end-line="12" selection-end-column="7" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/wtf/stage.rb">
+    <entry file="file://$PROJECT_DIR$/lib/wtf/stages/generate_project.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="41" column="16" selection-start-line="41" selection-start-column="16" selection-end-line="41" selection-end-column="16" />
+          <caret line="5" column="45" selection-start-line="5" selection-start-column="45" selection-end-line="5" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wtf.gemspec">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="89" selection-start-line="8" selection-start-column="89" selection-end-line="8" selection-end-column="89" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/wtf/cli.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2173913">
-          <caret line="9" column="57" selection-start-line="9" selection-start-column="57" selection-end-line="9" selection-end-column="57" />
+        <state vertical-scroll-proportion="0.12077295">
+          <caret line="5" column="113" selection-start-line="5" selection-start-column="113" selection-end-line="5" selection-end-column="113" />
           <folding />
         </state>
       </provider>

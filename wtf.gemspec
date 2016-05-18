@@ -5,8 +5,8 @@ require File.dirname(__FILE__) + "/lib/wtf/version"
 Gem::Specification.new do |gem|
   gem.name          = "wtf"
   gem.version       = Wtf::VERSION
-  gem.summary       = "TODO"
-  gem.description   = "TODO"
+  gem.summary       = "Test tool for wooget unity projects"
+  gem.description   = "Generates projects, builds + deploys them and collates the results"
   gem.authors       = ["Donald Hutchison"]
   gem.email         = ["donald.hutchison@wooga.net"]
   gem.homepage      = "https://github.com/wooga/wtf"

@@ -70,19 +70,19 @@ module Wtf
     def wooget_bootstrap
       Wtf.log.info "Bootstrapping.."
       Dir.chdir(@project) do
-        b = Wooget::Unity.new
+        b = Wooget::Unity.new [], verbose:true
         b.options = b.options.merge quiet: true
         b.bootstrap
       end
     end
 
     def set_parent_dependency
-      Util.prepend_to_file File.join(@project,"paket.dependencies"), "source #{File.join(@parent_package,"bin")}\n"
+      Util.prepend_to_file File.join(@project,"paket.dependencies"), "source #{File.expand_path(File.join(@parent_package,"bin"))}\n"
     end
 
     def install
       Dir.chdir(@project) do
-        cli = Wooget::CLI.new [], quiet:true
+        cli = Wooget::CLI.new [], verbose:true
         cli.install @test_package
       end
     end
