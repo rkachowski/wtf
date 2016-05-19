@@ -6,9 +6,9 @@ module Wtf
       "#{Stage.current_stage}_#{Time.now.to_i}.unitylog"
     end
 
-    def self.run cmd
+    def self.run cmd, path="."
       run_logname = self.logname
-      to_run = "#{DEFAULT_PATH} -batchmode -quit -logFile #{run_logname} #{cmd}"
+      to_run = "#{DEFAULT_PATH} -batchmode -quit -logFile #{run_logname} -projectPath #{path} #{cmd}"
       Wtf.log.info to_run
 
       result = `#{to_run}`

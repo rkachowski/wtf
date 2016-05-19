@@ -47,7 +47,7 @@ module Wtf
     end
 
     def set_unittest_dependency
-      Util.append_to_file File.join(@project,"paket.dependencies"), "\nnuget Wooga.EAUnit.Unity3D.Source"
+      Util.append_to_file File.join(@project,"paket.dependencies"), "\nnuget Wooga.EAUnit"
     end
 
     def copy_test_files
