@@ -8,7 +8,7 @@ module Wtf
 
     def self.run cmd, path="."
       run_logname = self.logname
-      to_run = "#{DEFAULT_PATH} -batchmode -quit -logFile #{run_logname} -projectPath #{path} #{cmd}"
+      to_run = "#{DEFAULT_PATH} -batchmode -quit -logFile #{run_logname} -projectPath #{File.expand_path(path)} #{cmd}"
       Wtf.log.info to_run
 
       result = `#{to_run}`
@@ -16,6 +16,9 @@ module Wtf
     end
 
     def self.failure_reason logfile
+
+      #todo: handle failure for "Aborting batchmode due to failure:"
+
       log = File.open(logfile).read.lines
       failure_start = log.find_index { |l| l =~ /compilationhadfailure: True/ }
       error = log.slice(failure_start..-1)

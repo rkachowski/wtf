@@ -19,8 +19,8 @@ module Wtf
     desc "build PATH [PLATFORM]","Build artifacts"
     def build path=Dir.pwd, platform="android"
       stages = {
-          BuildEditor => [{platform:platform, path:path}]#,
-          #CreateTestScene
+          BuildEditor => [{platform:platform, path:path}],
+          CreateTestScene => [{platform:platform, path:path}]
           #ApplyBuildSettings
           #BuildTarget
       }
@@ -28,8 +28,8 @@ module Wtf
       stages.each {|stage, params| run_stage stage, params }
     end
 
-    desc "run", "Deploy and run artifacts on devices"
-    def run
+    desc "run_tests", "Deploy and run artifacts on devices"
+    def run_tests
 
     end
 
