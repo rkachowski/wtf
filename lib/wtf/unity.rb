@@ -1,5 +1,6 @@
 module Wtf
   class Unity
+    #todo: change this via uvm support
     DEFAULT_PATH = "/Applications/Unity/Unity.app/Contents/MacOS/Unity"
 
     def self.logname
@@ -16,14 +17,32 @@ module Wtf
     end
 
     def self.failure_reason logfile
-
-      #todo: handle failure for "Aborting batchmode due to failure:"
-
       log = File.open(logfile).read.lines
-      failure_start = log.find_index { |l| l =~ /compilationhadfailure: True/ }
-      error = log.slice(failure_start..-1)
+
+      compile_failure_start = log.find_index { |l| l =~ /compilationhadfailure: True/ }
+      return get_compile_fail(log, compile_failure_start) if compile_failure_start
+
+      arbitrary_batch_mode_fail = log.find_index { |l| l =~ /Aborting batchmode due to failure/ }
+      return get_arbitrary_failure(log, arbitrary_batch_mode_fail) if arbitrary_batch_mode_fail
+
+      #unknown failure
+      "Unknown failure - check #{logfile} for detail"
+    end
+
+    def self.get_arbitrary_failure(log, arbitrary_batch_mode_fail)
+      error = log.slice(arbitrary_batch_mode_fail..-1)
+      failure_end = error.find_index { |l| l =~ /^\s*$/ }
+      msg = error.slice(0,failure_end)
+      msg.shift
+      msg.join
+    end
+
+    def self.get_compile_fail(log, compile_failure_start)
+      error = log.slice(compile_failure_start..-1)
       failure_end = error.find_index { |l| l =~ /EndCompilerOutput/ }
-      error.slice(0,failure_end).shift.join
+      msg = error.slice(0,failure_end)
+      msg.shift
+      msg.join
     end
   end
 end
