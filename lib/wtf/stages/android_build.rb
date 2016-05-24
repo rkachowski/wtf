@@ -3,13 +3,12 @@ module Wtf
     def perform
       path = options[:path]
 
-      puts options
       manifest_path = File.join(options[:path], "Assets/Plugins/Android/AndroidManifest.xml")
       template = Templates.new [], options.clone
 
       unless File.exists? manifest_path
         Wtf.log.info ""
-        Wtf.log.info "AndroidManifest not found - generating default file (these values may be overridden by unity)"
+        Wtf.log.info "AndroidManifest.xml not found - generating..."
 
         template.android_manifest manifest_path
         Wtf.log.info ""
@@ -28,6 +27,16 @@ module Wtf
       unless status == 0
         fail(Unity.failure_reason(logfile))
       end
+
+
+      artifact = `ls '#{options[:output]}'/*.apk`.chomp
+      unless $?.exitstatus == 0 and File.exists?(artifact)
+        fail("Couldn't find build artifact (expected to find #{options[:output]}/*.apk)")
+      end
+
+      Wtf.log.info ""
+
+      Wtf.log.info "Generated build artifact at #{artifact}"
     end
   end
 end
