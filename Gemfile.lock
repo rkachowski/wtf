@@ -28,7 +28,7 @@ GEM
     thor (0.19.1)
     wooga_uvm (0.2.0)
       thor
-    wooga_wooget (2.0.6)
+    wooga_wooget (2.0.7)
       curb (~> 0.8)
       thor (~> 0.19)
 

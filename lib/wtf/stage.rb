@@ -48,6 +48,7 @@ module Wtf
     end
 
     def fail msg
+      return if failed?
       method_name = caller_locations(1,1)[0].label
 
       @failure_message = "[wtf failure] #{stage_name} #{method_name.capitalize} failed - #{msg}"

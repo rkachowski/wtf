@@ -1,5 +1,13 @@
 module Wtf
   class AndroidBuild < Stage
+    def setup
+      required_packages = %w(Wooga.SDK.Build)
+      required_packages.each do |p|
+        fail("Required package #{p} not installed in project #{options[:path]}") unless Wooget::Paket.installed? options[:path], p
+      end
+
+    end
+
     def perform
       path = options[:path]
 
@@ -23,9 +31,11 @@ module Wtf
         Wtf.log.info ""
       end
 
-      status, stdout, logfile = Unity.run "-buildTarget android -executeMethod Wooga.SDKBuild.Build", path
+      status, _, logfile = Unity.run "-buildTarget android -executeMethod Wooga.SDKBuild.Build", path
+
       unless status == 0
         fail(Unity.failure_reason(logfile))
+        return
       end
 
 

@@ -12,8 +12,15 @@ module Wtf
       to_run = "#{DEFAULT_PATH} -batchmode -quit -logFile #{run_logname} -projectPath #{File.expand_path(path)} #{cmd}"
       Wtf.log.info to_run
 
-      result = `#{to_run}`
-      [$?.exitstatus, result, run_logname]
+      stdout = `#{to_run}`
+      result = [$?.exitstatus, stdout, run_logname]
+
+      Wtf.log.info "Command returned exit code #{result[0]}"
+
+      #unity logfile needs to flush...
+      sleep 0.2
+
+      result
     end
 
     def self.failure_reason logfile

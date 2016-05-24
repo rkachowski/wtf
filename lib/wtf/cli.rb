@@ -41,16 +41,17 @@ module Wtf
           puts "yey"
       end
 
-
-      #assert artifact
-
       stages.each { |stage, params| run_stage stage, params }
     end
 
-    desc "run_tests", "Deploy and run artifacts on devices"
+    desc "deploy_and_run", "Deploy and run artifacts on devices"
 
-    def run_tests
+    option :path, desc: "Path to artifact", required: true, type: :string
+    option :platform, desc: "Platform to deploy to", type: :string, required: true, enum: %w(ios android)
+    def deploy_and_run
+      stages = {}
 
+      stages[FindDevices] = [options]
     end
 
     no_commands do
