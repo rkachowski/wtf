@@ -1,7 +1,7 @@
 module Wtf
   class ADB < Thor
     include Thor::Actions
-    class_option :device, :desc => 'Device serial number'
+    class_option :device, required: true, :desc => 'Device serial number'
 
     option :name, desc: "name of the file", default:`date +"%m-%d-%y-%T%d"`.chomp, type: :string
     desc "screenshot", "Take a screenshot"
@@ -28,7 +28,7 @@ module Wtf
     end
 
 
-    desc "install_referrer VALUE BUNDLE_ID", "Broadcast install referral just like the app store"
+    desc "install_referrer VALUE BUNDLE_ID", "Broadcast install referral just like the play store"
     def install_referrer referral_value, bundle_id
 
       self.options = Thor::CoreExt::HashWithIndifferentAccess.new.merge(self.options)
@@ -40,20 +40,35 @@ module Wtf
       broadcast action
     end
 
-    desc "clear_logs", "clear logcat on device"
-    def clear_logs
-      cmd "logcat -c"
+    desc "installed? package_id", "Is a package installed on the device"
+    def installed? package_id
+      output = execute_cmd "shell pm list packages #{package_id}"
+      not output.empty?
     end
 
-    def install apk
+    desc "clear_logs", "clear logcat on device"
+    def clear_logs
+      execute_cmd "logcat -c"
+    end
 
+    def self.devices
+      adb_output = %x{adb devices}.chomp.lines
+      devices = adb_output.map{ |l| l.scan /(^[0-9a-f]+)\s(?:device)/ }
+
+      devices.select{|r| not r.empty? }.flatten
+    end
+
+    desc "install APK", "install the apk file"
+    def install apk
+      Wtf.log.info "Installing #{apk} to #{options[:device]}!"
+      execute_cmd "install #{apk}"
     end
 
 no_commands do
     def execute_cmd cmd
       str = "adb #{ "-s #{options[:device]}" if options[:device] } #{cmd}"
       Wtf.log.info "Running: #{str}"
-      %x{#{str}}
+      %x{#{str}}.chomp.lines
     end
 end
 

@@ -15,7 +15,7 @@ module Wtf
           InstallDependencies => [File.expand_path(File.join(path, name)), package_id, {test: options[:test]}]
       }
 
-      stages.each { |stage, params| run_stage stage, params }
+      stages.inject(nil) { |previous_stage_output, (stage, params)| run_stage stage, params, previous_stage_output }
     end
 
     option :test, desc: "Create test scene and build with test scene as root", type: :boolean, default: false
@@ -38,10 +38,10 @@ module Wtf
 
           stages[AndroidBuild] = [Thor::CoreExt::HashWithIndifferentAccess.new(build_options)]
         when "ios"
-          puts "yey"
+          puts "not implemented"
       end
 
-      stages.each { |stage, params| run_stage stage, params }
+      stages.inject(nil) { |previous_stage_output, (stage, params)| run_stage stage, params, previous_stage_output }
     end
 
     desc "deploy_and_run", "Deploy and run artifacts on devices"
@@ -52,17 +52,43 @@ module Wtf
       stages = {}
 
       stages[FindDevices] = [options]
+      stages[InstallApp] = [options]
+      case options[:platform]
+        when "android"
+
+        when "ios"
+          puts "not implemented"
+      end
+
+      #install
+      #prerun (clear logs, broadcast stuff)
+      #run tests
+      #post run
+      #grab results
+      #collate
+
+      stages.inject(nil) { |previous_stage_output, (stage, params)| run_stage stage, params, previous_stage_output }
     end
 
     no_commands do
-      def run_stage stage, params
+      def run_stage stage, params, prev_result
+
+        #if the previous stage returned a hash, and the next stage accepts a hash as it's last parameter we will merge them
+        if prev_result and prev_result.is_a?(Hash) and params.last.is_a?(Hash)
+          merged_parameters = Thor::CoreExt::HashWithIndifferentAccess.new(params.last)
+          merged_parameters.merge!(prev_result)
+          params[params.length - 1] = merged_parameters
+        end
+
         stage_instance = stage.new *params
         Wtf.log.info stage_instance.header
-        stage_instance.execute
+        result = stage_instance.execute
 
         if stage_instance.failed?
           abort stage_instance.failure_message
         end
+
+        result
       end
     end
   end

@@ -4,13 +4,19 @@ require "uvm"
 require 'logger'
 
 require_relative "wtf/version"
+
 require_relative "wtf/stage"
 require_relative "wtf/stages/generate_project"
 require_relative "wtf/stages/install_dependencies"
 require_relative "wtf/stages/build_editor_assembly"
 require_relative "wtf/stages/create_test_scene"
 require_relative "wtf/stages/android_build"
+require_relative "wtf/stages/find_devices"
+require_relative "wtf/stages/install_app"
+
+
 require_relative "wtf/templates"
+require_relative "wtf/adb"
 
 require_relative "wtf/unity"
 require_relative "wtf/cli"

@@ -56,8 +56,10 @@ module Wtf
 
     def execute
       setup
-      perform unless failed?
+      result = perform unless failed?
       teardown unless failed?
+
+      result if result
     end
 
   end
