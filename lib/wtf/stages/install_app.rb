@@ -11,6 +11,13 @@ module Wtf
         when "android"
           fail("No android devices found") unless options[:devices][:android].count > 0
           fail("Invalid apk file at #{options[:path]}") unless File.exists?(options[:path])
+
+          required_commands = %w(adb aapt)
+          required_commands.each do |cmd|
+            `type #{cmd}`
+            fail "Can't find #{cmd} in path" unless $?.exitstatus == 0
+          end
+
         when "ios"
           fail("No ios devices found") if options[:platform] == "ios" and not options[:devices][:ios].count > 0
       end
@@ -24,7 +31,7 @@ module Wtf
 
       if options[:platform] == "android"
         mutex = Mutex.new
-        devices = target_device_ids.map {|d| ADB.new([],{device: d})}
+        devices = target_device_ids.map {|d| Android.new([], {device: d, fresh_install: true})}
 
         install_threads = devices.map do |device|
           Thread.new do

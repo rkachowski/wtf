@@ -1,5 +1,5 @@
 module Wtf
-  class ADB < Thor
+  class Android < Thor
     include Thor::Actions
     class_option :device, required: true, :desc => 'Device serial number'
 
@@ -51,6 +51,30 @@ module Wtf
       execute_cmd "logcat -c"
     end
 
+    option :package_name, desc: "package name / bundle id to be installed"
+    option :fresh_install, desc: "Should old packages be uninstalled before replacement", type: :boolean, default: true
+    desc "install APK", "install the apk file"
+    def install apk
+      Wtf.log.info "Installing #{apk} to #{options[:device]}..."
+
+      if options[:fresh_install]
+        package_name = options[:package_name] || self.class.get_package_name(apk)
+        if installed? package_name
+          Wtf.log.info "#{package_name} exists on #{options[:device]} already, uninstalling..."
+          execute_cmd "uninstall #{package_name}"
+        end
+      end
+
+      execute_cmd "install #{apk}"
+    end
+
+no_commands do
+    def self.get_package_name apk
+      package_line = `aapt dump badging #{apk} | grep package`.chomp
+
+      package_line.scan(/name='([a-zA-Z\.]+)'/).flatten.first
+    end
+
     def self.devices
       adb_output = %x{adb devices}.chomp.lines
       devices = adb_output.map{ |l| l.scan /(^[0-9a-f]+)\s(?:device)/ }
@@ -58,13 +82,6 @@ module Wtf
       devices.select{|r| not r.empty? }.flatten
     end
 
-    desc "install APK", "install the apk file"
-    def install apk
-      Wtf.log.info "Installing #{apk} to #{options[:device]}!"
-      execute_cmd "install #{apk}"
-    end
-
-no_commands do
     def execute_cmd cmd
       str = "adb #{ "-s #{options[:device]}" if options[:device] } #{cmd}"
       Wtf.log.info "Running: #{str}"
