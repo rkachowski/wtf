@@ -4,4 +4,4 @@ You are allowed to:
 1. Remove rake task
 2. Add existing rake tasks
 To add existing rake tasks automatically delete this file and reload the project.
---><RakeGroup description="" fullCmd="" taksId="rake"><RakeTask description="wtf | 0.1.0 | 3 dependencies | 12 files" fullCmd="gem" taksId="gem" /><RakeTask description="wtf | IRB" fullCmd="irb" taksId="irb" /></RakeGroup></Settings>
+--><RakeGroup description="" fullCmd="" taksId="rake"><RakeTask description="wtf | 0.1.0 | 4 dependencies | 2191 files" fullCmd="gem" taksId="gem" /><RakeTask description="wtf | IRB" fullCmd="irb" taksId="irb" /></RakeGroup></Settings>

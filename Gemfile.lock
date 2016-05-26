@@ -3,6 +3,7 @@ PATH
   specs:
     wtf (0.1.0)
       thor (~> 0.19)
+      waitutil
       wooga_uvm
       wooga_wooget
 
@@ -13,7 +14,7 @@ GEM
       columnize (= 0.9.0)
     coderay (1.1.1)
     columnize (0.9.0)
-    curb (0.9.1)
+    curb (0.9.3)
     method_source (0.8.2)
     minitest (5.8.4)
     pry (0.10.3)
@@ -26,9 +27,11 @@ GEM
     rake (10.5.0)
     slop (3.6.0)
     thor (0.19.1)
-    wooga_uvm (0.2.0)
+    waitutil (0.2.1)
+    wooga_uvm (0.3.1)
       thor
-    wooga_wooget (2.0.7)
+      wooga_wooget
+    wooga_wooget (2.0.8)
       curb (~> 0.8)
       thor (~> 0.19)
 

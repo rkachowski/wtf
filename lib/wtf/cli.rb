@@ -15,7 +15,7 @@ module Wtf
           InstallDependencies => [File.expand_path(File.join(path, name)), package_id, {test: options[:test]}]
       }
 
-      stages.inject(nil) { |previous_stage_output, (stage, params)| run_stage stage, params, previous_stage_output }
+      run_stages stages
     end
 
     option :test, desc: "Create test scene and build with test scene as root", type: :boolean, default: false
@@ -41,7 +41,7 @@ module Wtf
           puts "not implemented"
       end
 
-      stages.inject(nil) { |previous_stage_output, (stage, params)| run_stage stage, params, previous_stage_output }
+      run_stages stages
     end
 
     desc "deploy_and_run", "Deploy and run artifacts on devices"
@@ -53,6 +53,12 @@ module Wtf
 
       stages[FindDevices] = [options]
       stages[InstallApp] = [options]
+      stages[PostInstall] = [options]
+      stages[RunTestApp] = [options]
+      stages[PryStage] = [options]
+
+      # stages[PostRun] = [options]
+
       case options[:platform]
         when "android"
 
@@ -61,19 +67,24 @@ module Wtf
       end
 
       #install
-      #prerun (clear logs, broadcast stuff)
       #run tests
       #post run
       #grab results
       #collate
 
-      stages.inject(nil) { |previous_stage_output, (stage, params)| run_stage stage, params, previous_stage_output }
+      run_stages stages
     end
 
     no_commands do
+
+      def run_stages stages
+        stages.inject(nil) { |previous_stage_output, (stage, params)| run_stage stage, params, previous_stage_output }
+      end
+
       def run_stage stage, params, prev_result
 
-        #if the previous stage returned a hash, and the next stage accepts a hash as it's last parameter we will merge them
+        #if the previous stage returned a hash, and the next stage accepts a hash as it's last parameter,
+        # then we will merge the previous result with the input to the next stage
         if prev_result and prev_result.is_a?(Hash) and params.last.is_a?(Hash)
           merged_parameters = Thor::CoreExt::HashWithIndifferentAccess.new(params.last)
           merged_parameters.merge!(prev_result)

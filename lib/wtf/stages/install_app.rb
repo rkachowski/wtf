@@ -9,7 +9,7 @@ module Wtf
 
       case options[:platform]
         when "android"
-          fail("No android devices found") unless options[:devices][:android].count > 0
+          fail("No android devices found") unless options[:devices].count > 0
           fail("Invalid apk file at #{options[:path]}") unless File.exists?(options[:path])
 
           required_commands = %w(adb aapt)
@@ -19,19 +19,18 @@ module Wtf
           end
 
         when "ios"
-          fail("No ios devices found") if options[:platform] == "ios" and not options[:devices][:ios].count > 0
+          fail("No ios devices found") unless options[:devices][:ios].count > 0
       end
     end
 
     def perform
-      target_device_ids = options[:devices][options[:platform].to_sym]
-      Wtf.log.info "Installing #{options[:path]} to #{options[:platform]} devices : #{target_device_ids}\n"
+      devices = options[:devices]
+      Wtf.log.info "Installing #{options[:path]} to #{options[:platform]} devices : #{devices.map{|a| a.options[:device]}}\n"
 
       result = {installed_devices:[]}
 
       if options[:platform] == "android"
         mutex = Mutex.new
-        devices = target_device_ids.map {|d| Android.new([], {device: d, fresh_install: true})}
 
         install_threads = devices.map do |device|
           Thread.new do

@@ -21,6 +21,7 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency "thor", "~> 0.19"
   gem.add_runtime_dependency "wooga_uvm"
   gem.add_runtime_dependency "wooga_wooget"
+  gem.add_runtime_dependency "waitutil"
 
   gem.add_development_dependency "pry-byebug", "3.1.0"
   gem.add_development_dependency "rake", "10.5.0"
@@ -29,3 +30,4 @@ Gem::Specification.new do |gem|
   gem.required_ruby_version = "~> 2.0"
   gem.post_install_message = Wtf::POST_INSTALL
 end
+

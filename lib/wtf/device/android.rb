@@ -2,6 +2,13 @@ module Wtf
   class Android < Thor
     include Thor::Actions
     class_option :device, required: true, :desc => 'Device serial number'
+    attr_reader :log
+
+    def initialize(args = [], options = {}, config = {})
+      super
+      @log = []
+      @log_mutex = Mutex.new
+    end
 
     option :name, desc: "name of the file", default:`date +"%m-%d-%y-%T%d"`.chomp, type: :string
     desc "screenshot", "Take a screenshot"
@@ -16,6 +23,7 @@ module Wtf
     option :component, desc: "The intended recipient component", type: :string
     option :es_k, desc: "Extra string data key", type: :string
     option :es_v, desc: "Extra string data value", type: :string
+    option :data_uri, desc: "string data uri", type: :string
     desc "broadcast ACTION", "broadcast an intent with a specific action"
     def broadcast action
       extra = ""
@@ -23,10 +31,9 @@ module Wtf
         extra = " --es '#{[:es_k]}' '#{options[:es_v]}' "
       end
 
-      cmd = "shell am broadcast -a #{action} #{"-n '#{options[:component] }' " if options[:component] } " + extra
+      cmd = "shell am broadcast -a #{action} #{"-n '#{options[:component] }' " if options[:component] } #{"-d '#{options[:data_uri] }' " if options[:data_uri] } " + extra
       execute_cmd cmd
     end
-
 
     desc "install_referrer VALUE BUNDLE_ID", "Broadcast install referral just like the play store"
     def install_referrer referral_value, bundle_id
@@ -42,6 +49,8 @@ module Wtf
 
     desc "installed? package_id", "Is a package installed on the device"
     def installed? package_id
+      package_id = self.class.get_package_name(package_id) if package_id.end_with? ".apk"
+
       output = execute_cmd "shell pm list packages #{package_id}"
       not output.empty?
     end
@@ -49,6 +58,20 @@ module Wtf
     desc "clear_logs", "clear logcat on device"
     def clear_logs
       execute_cmd "logcat -c"
+    end
+
+    desc "launch package_id/apk","Launch the activity for the chosen package"
+    def launch package_id
+      package_id = self.class.get_package_name(package_id) if package_id.end_with? ".apk"
+
+      execute_cmd "shell monkey -p #{package_id} -c android.intent.category.LAUNCHER 1"
+    end
+
+    desc "kill package_id/apk", "Kill the activity with the provided package id"
+    def kill package_id
+      package_id = self.class.get_package_name(package_id) if package_id.end_with? ".apk"
+
+      execute_cmd "shell am force-stop #{package_id}"
     end
 
     option :package_name, desc: "package name / bundle id to be installed"
@@ -68,6 +91,29 @@ module Wtf
       execute_cmd "install #{apk}"
     end
 
+    desc "pull PATH","Pull a file from the path to pwd"
+    def pull path, destination=Dir.pwd
+      execute_cmd "pull #{path} #{destination}"
+    end
+
+    desc "attach_logcat", "start collecting log info from device"
+    def attach_logcat
+      if @log_thread
+        Wtf.log.info "Trying to attach logcat to #{id} whilst already attached"
+        return
+      end
+
+      @log_thread = Thread.new { Wooget::Util.run_cmd("adb #{ "-s #{options[:device]} logcat" if options[:device] }") {|log| on_log(log) } }
+    end
+
+    desc "detach_logcat", "stop grabbing logs"
+    def detach_logcat
+      return unless @log_thread
+
+      @log_thread.exit
+      @log_thread = nil
+    end
+
 no_commands do
     def self.get_package_name apk
       package_line = `aapt dump badging #{apk} | grep package`.chomp
@@ -80,6 +126,22 @@ no_commands do
       devices = adb_output.map{ |l| l.scan /(^[0-9a-f]+)\s(?:device)/ }
 
       devices.select{|r| not r.empty? }.flatten
+    end
+
+    def self.all fresh_install=true
+      devices.map {|d| Android.new([],{device: d, fresh_install: fresh_install})}
+    end
+
+    def on_log log
+      @log_mutex.synchronize { @log << log }
+    end
+
+    def log_contains str
+      @log_mutex.synchronize { @log.any? {|line| line =~ /#{Regexp.escape(str)}/ } }
+    end
+
+    def id
+      options[:device]
     end
 
     def execute_cmd cmd

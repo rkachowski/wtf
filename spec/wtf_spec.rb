@@ -65,5 +65,9 @@ describe Wtf do
   #   end
   # end
 
+  it "performs post run correctly" do
+
+  end
+
 end
 

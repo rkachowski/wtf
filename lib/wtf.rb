@@ -2,6 +2,7 @@ require "thor"
 require "wooget"
 require "uvm"
 require 'logger'
+require 'waitutil'
 
 require_relative "wtf/version"
 
@@ -13,6 +14,11 @@ require_relative "wtf/stages/create_test_scene"
 require_relative "wtf/stages/android_build"
 require_relative "wtf/stages/find_devices"
 require_relative "wtf/stages/install_app"
+require_relative "wtf/stages/post_install"
+require_relative "wtf/stages/run_test_app"
+require_relative "wtf/stages/pry_stage"
+
+
 
 
 require_relative "wtf/templates"
