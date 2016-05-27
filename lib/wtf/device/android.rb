@@ -144,6 +144,42 @@ no_commands do
       options[:device]
     end
 
+    def get_prop property_name
+      @props ||= execute_cmd "shell getprop"
+
+      property_value = ""
+
+      line = @props.find {|p| p =~ /#{Regexp.escape(property_name)}/ }
+      match = line.match(/(?:\[.*\]).*\[(.*)\]/) if line
+      property_value = match[1] if match and match[1]
+
+      property_value
+    end
+
+    def model
+      @model ||= get_prop "ro.product.model"
+      @model
+    end
+
+    def api_level
+      @api_level ||= get_prop "ro.build.version.sdk"
+      @api_level
+    end
+
+    def android_version
+      @android_version ||= get_prop "ro.build.version.release"
+      @android_version
+    end
+
+    def arch
+      @arch ||= get_prop "ro.product.cpu.abilist"
+      @arch
+    end
+
+    def to_s
+      "#{model} (serial=#{id} api_level=#{api_level} android=#{android_version} arch=#{arch})"
+    end
+
     def execute_cmd cmd
       str = "adb #{ "-s #{options[:device]}" if options[:device] } #{cmd}"
       Wtf.log.info "Running: #{str}"

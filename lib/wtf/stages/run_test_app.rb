@@ -10,7 +10,7 @@ module Wtf
     def perform
       devices = options[:installed_devices]
 
-      states = devices.inject({}) { |hsh, d| hsh[d.id] = {status: :ready}; hsh }
+      states = devices.inject({}) { |hsh, d| hsh[d] = {status: :ready}; hsh }
       state_mutex = Mutex.new
 
       case options[:platform]
@@ -23,8 +23,8 @@ module Wtf
                 end
               rescue Exception => e
                 state_mutex.synchronize do
-                  states[device.id][:status] = :error
-                  states[device.id][:data] = e.message
+                  states[device][:status] = :error
+                  states[device][:data] = e.message
                 end
               end
             end
@@ -41,13 +41,13 @@ module Wtf
 
       #launch app
       device.launch options[:path]
-      state_mutex.synchronize { states[device.id][:status] = :launching }
+      state_mutex.synchronize { states[device][:status] = :launching }
 
       #wait for start tag
       WaitUtil.wait_for_condition("Test Run Start") do
         device.log_contains "[TestRunStart]"
       end
-      state_mutex.synchronize { states[device.id][:status] = :running }
+      state_mutex.synchronize { states[device][:status] = :running }
       Wtf.log.info "#{device.id} started test run"
       #wait for end tag
       WaitUtil.wait_for_condition("Test Run End") do
@@ -56,7 +56,7 @@ module Wtf
       Wtf.log.info "#{device.id} finished test run"
 
       device.kill options[:path]
-      state_mutex.synchronize { states[device.id][:status] = :finished }
+      state_mutex.synchronize { states[device][:status] = :finished }
 
       #broadcast media mounted
       device.options = device.options.merge(data_uri: "file:///mnt/sdcard")
@@ -67,8 +67,8 @@ module Wtf
 
       device.detach_logcat
       state_mutex.synchronize do
-        states[device.id][:status] = :finished
-        states[device.id][:data] = {results: File.open("#{device.id}-results.xml").read, log: device.log.clone}
+        states[device][:status] = :finished
+        states[device][:data] = {results: File.open("#{device.id}-results.xml").read, log: device.log.clone}
       end
     end
   end

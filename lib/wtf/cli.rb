@@ -55,9 +55,9 @@ module Wtf
       stages[InstallApp] = [options]
       stages[PostInstall] = [options]
       stages[RunTestApp] = [options]
-      stages[PryStage] = [options]
+      stages[FinalizeResults] = [options]
+      #stages[PryStage] = [options]
 
-      # stages[PostRun] = [options]
 
       case options[:platform]
         when "android"
@@ -79,6 +79,8 @@ module Wtf
 
       def run_stages stages
         stages.inject(nil) { |previous_stage_output, (stage, params)| run_stage stage, params, previous_stage_output }
+
+        Wtf.log.info "\n[wtf done]"
       end
 
       def run_stage stage, params, prev_result
@@ -93,7 +95,12 @@ module Wtf
 
         stage_instance = stage.new *params
         Wtf.log.info stage_instance.header
-        result = stage_instance.execute
+
+        begin
+          result = stage_instance.execute
+        rescue Exception => e
+          abort "\n[wtf error]\n got exception '#{e.class}' #{e.message} - #{e.backtrace.join("\n")}"
+        end
 
         if stage_instance.failed?
           abort stage_instance.failure_message

@@ -9,7 +9,7 @@ module Wtf
     def perform
       android = Android.all
 
-      Wtf.log.info "Detected android devices: #{android.map{|a| a.id}}"
+      Wtf.log.info "Detected android devices: \n#{android.map{|a| " "*4+a.to_s}.join("\n")}"
 
       fail("No devices found!") if android.empty?
 

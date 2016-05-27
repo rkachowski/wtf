@@ -3,6 +3,7 @@ require "wooget"
 require "uvm"
 require 'logger'
 require 'waitutil'
+require 'nokogiri'
 
 require_relative "wtf/version"
 
@@ -17,6 +18,8 @@ require_relative "wtf/stages/install_app"
 require_relative "wtf/stages/post_install"
 require_relative "wtf/stages/run_test_app"
 require_relative "wtf/stages/pry_stage"
+require_relative "wtf/stages/finalize_results"
+
 
 
 

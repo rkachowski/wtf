@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     wtf (0.1.0)
+      nokogiri
       thor (~> 0.19)
       waitutil
       wooga_uvm
@@ -16,7 +17,10 @@ GEM
     columnize (0.9.0)
     curb (0.9.3)
     method_source (0.8.2)
+    mini_portile2 (2.0.0)
     minitest (5.8.4)
+    nokogiri (1.6.7.2)
+      mini_portile2 (~> 2.0.0.rc2)
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)

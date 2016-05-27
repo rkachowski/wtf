@@ -22,6 +22,7 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency "wooga_uvm"
   gem.add_runtime_dependency "wooga_wooget"
   gem.add_runtime_dependency "waitutil"
+  gem.add_runtime_dependency "nokogiri"
 
   gem.add_development_dependency "pry-byebug", "3.1.0"
   gem.add_development_dependency "rake", "10.5.0"
