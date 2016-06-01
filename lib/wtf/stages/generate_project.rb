@@ -11,9 +11,9 @@ module Wtf
     end
 
     def perform
-      exitstatus, log = Unity.run "-createProject '#{File.join(options[:path], options[:name])}'"
+      exitstatus, _,logname = Unity.run "-createProject '#{File.join(options[:path], options[:name])}'"
 
-      fail(log) unless exitstatus == 0
+      fail(Unity.failure_reason(logname)) unless exitstatus == 0
     end
   end
 end

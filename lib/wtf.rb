@@ -31,8 +31,11 @@ require_relative "wtf/misc"
 module Wtf
   @@log = Logger.new(STDOUT)
   @@log.formatter = proc do |severity, datetime, progname, msg|
-    "#{msg}\n"
+    msg = msg.to_s
+    msg = msg + "\n" unless msg.end_with? "\n"
+    msg.start_with?("[quiet]") ? "#{msg.sub("[quiet]","")}" : msg
   end
+
   @@log.level = Logger::Severity::DEBUG
   Wooget.log = @@log
 

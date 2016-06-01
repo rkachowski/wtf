@@ -23,22 +23,26 @@ module Wtf
 
 
     def perform
-      uvm = UVM::CLI.new [], [], []
+      uvm = UVM::CLI.new [], {}, {}
 
-      Wtf.log "Using unity version #{options[:unity_version]}"
+      Wtf.log.info "Using unity version #{options[:unity_version]}"
       uvm.use options[:unity_version]
 
-      Wtf.log "Build environment:"
-      Wooget::Util.run_cmd "( set -o posix ; set )"
 
-      Wtf.log "Attached Devices:"
-      Wtf.log "  Android:"
+      env = ""
+      Wooget::Util.run_cmd("( set -o posix ; set )") {|l| env << l}
+      
+      Wtf.log.info "Build environment:"
+      Wtf.log.info env
+
+      Wtf.log.info "Attached Devices:"
+      Wtf.log.info "  Android:"
       Android.devices.each do |device|
-        Wtf.log "    #{device}"
+        Wtf.log.info "    #{device}"
       end
 
-      Wtf.log "Wtf Options:"
-      Wtf.log options
+      Wtf.log.info "Wtf Options:"
+      Wtf.log.info options
     end
   end
 end

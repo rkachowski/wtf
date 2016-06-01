@@ -6,11 +6,11 @@ module Wtf
     add_runtime_options!
 
     option :test, desc: "Copy test files from parent + install test dependencies", type: :boolean, default: false
-    desc "configure PACKAGE_ID [PATH] [PROJECT NAME]", "Generate project with PACKAGE_ID as dependency + install dependencies"
+    desc "make_test_project PACKAGE_ID [PATH] [PROJECT NAME]", "Generate project with PACKAGE_ID as dependency + install dependencies"
 
     def make_test_project package_id, path=Dir.pwd, name="project"
       stages = {
-          SetupAndAssertEnvironment =>[],
+          SetupAndAssertEnvironment =>[{}],
           GenerateProject => [{name: name, path: path}],
           InstallDependencies => [File.expand_path(File.join(path, name)), package_id, {test: options[:test]}]
       }

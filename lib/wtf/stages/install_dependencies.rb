@@ -52,7 +52,7 @@ module Wtf
 
     def copy_test_files
       files = Dir[File.join(@parent_package,"tests","**/*.cs")]
-      files.delete_if {|f| f =~ /AssemblyInfo/}
+      files.delete_if {|f| f =~ /AssemblyInfo/ || f =~ /TemporaryGeneratedFile/ }
       test_dir = File.join(@project, "Assets/Tests")
 
       Wtf.log.info "Copying test files #{files} to #{test_dir}"
