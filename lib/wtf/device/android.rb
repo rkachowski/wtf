@@ -38,13 +38,13 @@ module Wtf
     desc "install_referrer VALUE BUNDLE_ID", "Broadcast install referral just like the play store"
     def install_referrer referral_value, bundle_id
 
-      self.options = Thor::CoreExt::HashWithIndifferentAccess.new.merge(self.options)
-      self.options[:component] = "#{bundle_id}/com.wooga.sdk.InstallReferrerReceiver"
-      self.options[:es_k] = "referrer"
-      self.options[:es_v] = referral_value
+      broadcast_options = {}
+      broadcast_options[:component] = "#{bundle_id}/com.wooga.sdk.InstallReferrerReceiver"
+      broadcast_options[:es_k] = "referrer"
+      broadcast_options[:es_v] = referral_value
       action = "com.android.vending.INSTALL_REFERRER"
 
-      broadcast action
+      invoke "broadcast", [action], broadcast_options.merge(options)
     end
 
     desc "installed? package_id", "Is a package installed on the device"

@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5fbe5c8a-ec64-4604-9f2f-68b53c77614a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/wtf/cli.rb" afterPath="$PROJECT_DIR$/lib/wtf/cli.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/wtf/device/android.rb" afterPath="$PROJECT_DIR$/lib/wtf/device/android.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/wtf/stages/install_app.rb" afterPath="$PROJECT_DIR$/lib/wtf/stages/install_app.rb" />
     </list>
     <ignored path="wtf.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -100,8 +97,8 @@
       <file leaf-file-name="android.rb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/wtf/device/android.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.6314286">
-              <caret line="118" column="48" selection-start-line="118" selection-start-column="48" selection-end-line="118" selection-end-column="48" />
+            <state vertical-scroll-proportion="0.23571429">
+              <caret line="26" column="73" selection-start-line="26" selection-start-column="73" selection-end-line="26" selection-end-column="73" />
               <folding />
             </state>
           </provider>
@@ -1024,8 +1021,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/wtf/device/android.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.6314286">
-          <caret line="118" column="48" selection-start-line="118" selection-start-column="48" selection-end-line="118" selection-end-column="48" />
+        <state vertical-scroll-proportion="0.23571429">
+          <caret line="26" column="73" selection-start-line="26" selection-start-column="73" selection-end-line="26" selection-end-column="73" />
           <folding />
         </state>
       </provider>
