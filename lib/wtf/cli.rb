@@ -8,9 +8,9 @@ module Wtf
     option :test, desc: "Copy test files from parent + install test dependencies", type: :boolean, default: false
     desc "configure PACKAGE_ID [PATH] [PROJECT NAME]", "Generate project with PACKAGE_ID as dependency + install dependencies"
 
-    def configure package_id, path=Dir.pwd, name="project"
+    def make_test_project package_id, path=Dir.pwd, name="project"
       stages = {
-          #AssertEnvironment - log attached devices, software versions, bash env, git commits etc
+          SetupAndAssertEnvironment =>[],
           GenerateProject => [{name: name, path: path}],
           InstallDependencies => [File.expand_path(File.join(path, name)), package_id, {test: options[:test]}]
       }
@@ -24,7 +24,7 @@ module Wtf
     option :platform, desc: "Platform to build for", type: :string, default: "android", enum: %w(ios android)
     option :name, desc: "App name", type: :string, default: "project"
     option :path, desc: "Path to unity project", required: true, type: :string
-    desc "build", "Build artifacts"
+    desc "build", "Build artifacts for project (.apk / .app)"
 
     def build
       stages = {}
@@ -44,7 +44,7 @@ module Wtf
       run_stages stages
     end
 
-    desc "deploy_and_run", "Deploy and run artifacts on devices"
+    desc "deploy_and_run", "Deploy and run test artifacts on devices"
 
     option :path, desc: "Path to artifact", required: true, type: :string
     option :platform, desc: "Platform to deploy to", type: :string, required: true, enum: %w(ios android)

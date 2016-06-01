@@ -19,10 +19,7 @@ require_relative "wtf/stages/post_install"
 require_relative "wtf/stages/run_test_app"
 require_relative "wtf/stages/pry_stage"
 require_relative "wtf/stages/finalize_results"
-
-
-
-
+require_relative "wtf/stages/setup_and_assert_environment"
 
 require_relative "wtf/templates"
 require_relative "wtf/device/android"

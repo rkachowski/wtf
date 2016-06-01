@@ -1,5 +1,10 @@
 module Wtf
   module Util
+    def self.is_available_in_env? prog
+      `type "#{prog}"`
+      $?.exitstatus == 0
+    end
+
     class FileManip < Thor
       include Thor::Actions
       add_runtime_options!
