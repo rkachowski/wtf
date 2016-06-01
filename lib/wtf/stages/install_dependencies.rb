@@ -44,6 +44,8 @@ module Wtf
         set_unittest_dependency
       end
 
+      Util.append_to_file File.join(@project,"paket.dependencies"), "\nnuget Wooga.SDK.Build"
+
       install
     end
 

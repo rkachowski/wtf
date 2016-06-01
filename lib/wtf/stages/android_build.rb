@@ -6,6 +6,7 @@ module Wtf
         fail("Required package #{p} not installed in project #{options[:path]}") unless Wooget::Paket.installed? options[:path], p
       end
 
+      options[:bundle_id] ||= "net.wooga.sdk.#{options[:name]}"
     end
 
     def perform
@@ -39,9 +40,10 @@ module Wtf
       end
 
 
-      artifact = `ls '#{options[:output]}'/*.apk`.chomp
-      unless $?.exitstatus == 0 and File.exists?(artifact)
-        fail("Couldn't find build artifact (expected to find #{options[:output]}/*.apk)")
+      artifact = File.join(options[:output],"#{options[:name]}.apk")
+      unless File.exists?(artifact)
+        fail("Couldn't find build artifact (expected to find #{artifact}")
+        return
       end
 
       Wtf.log.info ""

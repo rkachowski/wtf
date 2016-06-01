@@ -31,16 +31,12 @@ module Wtf
     desc "build", "Build artifacts for project (.apk / .app)"
 
     def build
-      stages = {}
-      stages[BuildEditor] = [options]
-      stages[CreateTestScene] = [options] if options[:test]
+      stages = [BuildEditor]
+      stages << CreateTestScene if options[:test]
 
       case options[:platform]
         when "android"
-          bundle_id = options[:bundle_id] || "net.wooga.sdk.#{options[:name]}"
-          build_options = options.merge({:bundle_id => bundle_id})
-
-          stages[AndroidBuild] = [Thor::CoreExt::HashWithIndifferentAccess.new(build_options)]
+          stages << AndroidBuild
         when "ios"
           puts "not implemented"
       end
