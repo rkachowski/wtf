@@ -5,14 +5,15 @@ module Wtf
   class InstallDependencies < Stage
     attr_reader :parent_package
 
-    def initialize project, test_package, options={}
-      super options
-
-      @project = project
-      @test_package = test_package
-    end
-
     def setup
+
+      @project = File.join(options[:path],options[:name])
+      @test_package = options[:package_id]
+
+      unless @test_package
+        fail "Test package id not provided - don't know what to install to the test project"
+      end
+
       #provided path should point to a unity project dir
       unless @project and Wooget::Util.is_a_unity_project_dir(@project)
         return fail("Couldn't find a unity project at provided path '#{@project}")

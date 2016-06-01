@@ -5,17 +5,21 @@ module Wtf
     include Thor::Actions
     add_runtime_options!
 
-    option :test, desc: "Copy test files from parent + install test dependencies", type: :boolean, default: false
-    desc "make_test_project PACKAGE_ID [PATH] [PROJECT NAME]", "Generate project with PACKAGE_ID as dependency + install dependencies"
+    option :test, desc: "Copy test files from parent + install test packages", type: :boolean, default: false
+    option :name, desc: "App name", type: :string, default: "project"
+    option :path, desc: "Path to unity project", required: true, type: :string
+    option :package_id, desc: "Id of the package you want to create a test project for", required: true
+    desc "make_test_project", "Generate project with package_id as dependency + install dependencies"
 
-    def make_test_project package_id, path=Dir.pwd, name="project"
-      stages = {
-          SetupAndAssertEnvironment =>[{}],
-          GenerateProject => [{name: name, path: path}],
-          InstallDependencies => [File.expand_path(File.join(path, name)), package_id, {test: options[:test]}]
-      }
+    def make_test_project
 
-      run_stages stages
+      stages = [
+          SetupAndAssertEnvironment,
+          GenerateProject,
+          InstallDependencies
+      ]
+
+      run_stages stages, options
     end
 
     option :test, desc: "Create test scene and build with test scene as root", type: :boolean, default: false
@@ -41,7 +45,7 @@ module Wtf
           puts "not implemented"
       end
 
-      run_stages stages
+      run_stages stages, options
     end
 
     desc "deploy_and_run", "Deploy and run test artifacts on devices"
@@ -66,19 +70,13 @@ module Wtf
           puts "not implemented"
       end
 
-      #install
-      #run tests
-      #post run
-      #grab results
-      #collate
-
-      run_stages stages
+      run_stages stages, options
     end
 
     no_commands do
 
-      def run_stages stages
-        stages.inject(nil) { |previous_stage_output, (stage, params)| run_stage stage, params, previous_stage_output }
+      def run_stages stages, stage_options
+        stages.inject(nil) { |previous_stage_output, stage| run_stage stage, stage_options, previous_stage_output }
 
         Wtf.log.info "\n[wtf done]"
       end
@@ -93,7 +91,7 @@ module Wtf
           params[params.length - 1] = merged_parameters
         end
 
-        stage_instance = stage.new *params
+        stage_instance = stage.new Thor::CoreExt::HashWithIndifferentAccess.new(params)
         Wtf.log.info stage_instance.header
 
         begin

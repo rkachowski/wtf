@@ -7,7 +7,7 @@ require 'nokogiri'
 
 require_relative "wtf/version"
 
-require_relative "wtf/stage"
+require_relative "wtf/stages/stage"
 require_relative "wtf/stages/generate_project"
 require_relative "wtf/stages/install_dependencies"
 require_relative "wtf/stages/build_editor_assembly"
