@@ -49,22 +49,7 @@ module Wtf
     option :path, desc: "Path to artifact", required: true, type: :string
     option :platform, desc: "Platform to deploy to", type: :string, required: true, enum: %w(ios android)
     def deploy_and_run
-      stages = {}
-
-      stages[FindDevices] = [options]
-      stages[InstallApp] = [options]
-      stages[PostInstall] = [options]
-      stages[RunTestApp] = [options]
-      stages[FinalizeResults] = [options]
-      #stages[PryStage] = [options]
-
-
-      case options[:platform]
-        when "android"
-
-        when "ios"
-          puts "not implemented"
-      end
+      stages = [FindDevices,InstallApp, PostInstall, RunTestApp, FinalizeResults]
 
       run_stages stages, options
     end
@@ -79,15 +64,11 @@ module Wtf
 
       def run_stage stage, params, prev_result
 
-        #if the previous stage returned a hash, and the next stage accepts a hash as it's last parameter,
-        # then we will merge the previous result with the input to the next stage
-        if prev_result and prev_result.is_a?(Hash) and params.last.is_a?(Hash)
-          merged_parameters = Thor::CoreExt::HashWithIndifferentAccess.new(params.last)
-          merged_parameters.merge!(prev_result)
-          params[params.length - 1] = merged_parameters
+        if prev_result and prev_result.is_a?(Hash) and params.is_a?(Hash)
+          params = Thor::CoreExt::HashWithIndifferentAccess.new(params).merge(prev_result)
         end
 
-        stage_instance = stage.new Thor::CoreExt::HashWithIndifferentAccess.new(params)
+        stage_instance = stage.new params
         Wtf.log.info stage_instance.header
 
         begin

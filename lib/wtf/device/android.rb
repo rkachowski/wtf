@@ -88,7 +88,7 @@ module Wtf
         end
       end
 
-      execute_cmd "install #{apk}"
+      execute_cmd "install '#{apk}'"
     end
 
     desc "pull PATH","Pull a file from the path to pwd"
@@ -116,7 +116,7 @@ module Wtf
 
 no_commands do
     def self.get_package_name apk
-      package_line = `aapt dump badging #{apk} | grep package`.chomp
+      package_line = `aapt dump badging '#{apk}' | grep package`.chomp
 
       package_line.scan(/name='([a-zA-Z\.]+)'/).flatten.first
     end

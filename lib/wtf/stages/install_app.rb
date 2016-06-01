@@ -9,7 +9,7 @@ module Wtf
 
       case options[:platform]
         when "android"
-          fail("No android devices found") unless options[:devices].count > 0
+          fail("No android devices found") unless options[:devices] and options[:devices].count > 0
           fail("Invalid apk file at #{options[:path]}") unless File.exists?(options[:path])
 
           required_commands = %w(adb aapt)
