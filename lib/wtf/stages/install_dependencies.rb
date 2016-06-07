@@ -19,15 +19,7 @@ module Wtf
         return fail("Couldn't find a unity project at provided path '#{@project}")
       end
 
-      #there should be a wooget package dir in a parent dir
-      @project.length.times do |i|
-        path_comp = @project.pathmap("%#{i}d")
-        if Wooget::Util.is_a_wooget_package_dir path_comp
-          Wtf.log.info "Found parent package dir at #{path_comp}"
-          @parent_package = path_comp
-          break
-        end
-      end
+      @parent_package = Util.get_parent_wooget_package @project
 
       unless @parent_package
         return fail("Couldn't find a parent wooget package dir in #{@project}")

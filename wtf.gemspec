@@ -3,7 +3,7 @@
 require File.dirname(__FILE__) + "/lib/wtf/version"
 
 Gem::Specification.new do |gem|
-  gem.name          = "wtf"
+  gem.name          = "wooga_wtf"
   gem.version       = Wtf::VERSION
   gem.summary       = "Test tool for wooget unity projects"
   gem.description   = "Generates projects, builds + deploys them and collates the results"

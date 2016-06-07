@@ -5,6 +5,19 @@ module Wtf
       $?.exitstatus == 0
     end
 
+    def self.get_parent_wooget_package path
+      path = File.expand_path(path)
+
+      path.length.times do |i|
+        path_comp = path.pathmap("%#{i}d")
+        if Wooget::Util.is_a_wooget_package_dir path_comp
+          return path_comp
+        end
+      end
+
+      nil
+    end
+
     class FileManip < Thor
       include Thor::Actions
       add_runtime_options!

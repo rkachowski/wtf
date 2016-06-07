@@ -15,6 +15,7 @@ module Wtf
 
       stages = [
           SetupAndAssertEnvironment,
+          WoogetBuild,
           GenerateProject,
           InstallDependencies
       ]
@@ -64,11 +65,12 @@ module Wtf
 
       def run_stage stage, params, prev_result
 
-        if prev_result and prev_result.is_a?(Hash) and params.is_a?(Hash)
-          params = Thor::CoreExt::HashWithIndifferentAccess.new(params).merge(prev_result)
+        stage_params = Thor::CoreExt::HashWithIndifferentAccess.new(params)
+        if prev_result and prev_result.is_a?(Hash)
+          stage_params.merge!(prev_result)
         end
 
-        stage_instance = stage.new params
+        stage_instance = stage.new stage_params
         Wtf.log.info stage_instance.header
 
         begin
