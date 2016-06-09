@@ -6,7 +6,7 @@ module Wtf
 
       #default high number for version testing
       #todo: don't allow push with this number
-      options[:version_number] ||= "919.919.919"
+      @options[:version_number] ||= "919.919.919"
     end
 
     def perform
@@ -24,7 +24,7 @@ module Wtf
 
       #build
       Wtf.log.info "Building local package #{options[:version_number]} to #{@package_dir}/bin "
-      wooget.invoke "build", version:options[:version_number], output:File.join(@package_dir,"bin")
+      wooget.invoke "build",[], version:options[:version_number], output:File.join(@package_dir,"bin")
     end
   end
 end

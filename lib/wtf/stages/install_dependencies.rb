@@ -1,6 +1,5 @@
 require 'rake' #pathmap
 require 'fileutils'
-
 module Wtf
   class InstallDependencies < Stage
     attr_reader :parent_package
@@ -29,6 +28,7 @@ module Wtf
     def perform
       copy_additional_files
       wooget_bootstrap
+
       set_parent_dependency
 
       if options[:test]
@@ -64,22 +64,19 @@ module Wtf
 
     def wooget_bootstrap
       Wtf.log.info "Bootstrapping.."
-      Dir.chdir(@project) do
-        b = Wooget::Unity.new [], verbose:true
-        b.options = b.options.merge quiet: true
-        b.bootstrap
-      end
+      b = Wooget::Unity.new [], quiet: true, path:File.expand_path(@project)
+      b.bootstrap
     end
 
     def set_parent_dependency
-      Util.prepend_to_file File.join(@project,"paket.dependencies"), "source #{File.expand_path(File.join(@parent_package,"bin"))}\n"
+      dependencies_file = File.expand_path(File.join(@project,"paket.dependencies"))
+
+      Util.prepend_to_file dependencies_file, "source #{File.expand_path(File.join(@parent_package,"bin"))}\n"
     end
 
     def install
-      Dir.chdir(@project) do
-        cli = Wooget::CLI.new [], verbose:true
-        cli.install @test_package
-      end
+      cli = Wooget::CLI.new [], verbose:true, path:File.expand_path(@project)
+      cli.install @test_package
     end
   end
 end

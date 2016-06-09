@@ -34,11 +34,11 @@ module Wtf
     end
 
     def self.prepend_to_file filepath, str
-      @@file_manip.prepend_to_file(filepath, str)
+      @@file_manip.prepend_to_file(File.expand_path(filepath), str)
     end
 
     def self.append_to_file filepath, str
-      @@file_manip.append_to_file(filepath, str)
+      @@file_manip.append_to_file(File.expand_path(filepath), str)
     end
   end
 end
