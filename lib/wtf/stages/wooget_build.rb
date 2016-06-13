@@ -12,6 +12,7 @@ module Wtf
     def perform
       #install dependencies
       wooget = Wooget::CLI.new [], path:@package_dir, verbose:true
+      binding.pry
 
       Wtf.log.info "Installing package dependencies to #{@package_dir}"
       wooget.invoke "install"
@@ -24,7 +25,7 @@ module Wtf
 
       #build
       Wtf.log.info "Building local package #{options[:version_number]} to #{@package_dir}/bin "
-      wooget.invoke "build",[], version:options[:version_number], output:File.join(@package_dir,"bin")
+      wooget.invoke "build",[], version:options[:version_number], output:File.join(@package_dir,"bin"), path:@package_dir
     end
   end
 end

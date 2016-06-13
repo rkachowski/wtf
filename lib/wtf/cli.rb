@@ -12,7 +12,6 @@ module Wtf
     desc "make_test_project", "Generate project with package_id as dependency + install dependencies"
 
     def make_test_project
-
       stages = [
           SetupAndAssertEnvironment,
           WoogetBuild,
@@ -21,6 +20,15 @@ module Wtf
       ]
 
       run_stages stages, options
+    end
+
+    desc "ci_setup", "make_test_project for ci"
+    option :test, desc: "Copy test files from parent + install test packages", type: :boolean, default: true
+    option :name, desc: "App name", type: :string, default: "project"
+    option :path, desc: "Path to unity project", required: true, type: :string
+    option :package_id, desc: "Id of the package you want to create a test project for", required: true
+    def ci_setup
+      invoke "make_test_project", [],  test:true, name: options[:name], path: options[:path], package_id:options[:package_id ]
     end
 
     option :test, desc: "Create test scene and build with test scene as root", type: :boolean, default: false
