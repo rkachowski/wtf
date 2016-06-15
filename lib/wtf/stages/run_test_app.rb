@@ -1,7 +1,7 @@
 module Wtf
   class RunTestApp < Stage
 
-    TEST_RUN_TIME_SECONDS = 60 * 15
+    TEST_RUN_TIME_SECONDS = 300
 
     def setup
       fail("No installed devices provided!") if options[:installed_devices].empty?
@@ -22,6 +22,8 @@ module Wtf
                   run_test_app(device, state_mutex, states)
                 end
               rescue Exception => e
+                Wtf.log.info "!!! #{device.id} got exception #{e.message}"
+
                 state_mutex.synchronize do
                   states[device][:status] = :error
                   states[device][:data] = e.message
@@ -31,6 +33,8 @@ module Wtf
           end
 
           threads.each { |t| t.join }
+          devices.each { |d| d.detach_logcat }
+
           {test_result: states}
       end
     end
@@ -50,7 +54,7 @@ module Wtf
       state_mutex.synchronize { states[device][:status] = :running }
       Wtf.log.info "#{device.id} started test run"
       #wait for end tag
-      WaitUtil.wait_for_condition("Test Run End") do
+      WaitUtil.wait_for_condition("Test Run End", timeout_sec: TEST_RUN_TIME_SECONDS - 60) do
         device.log_contains "[TestRunEnd]"
       end
       Wtf.log.info "#{device.id} finished test run"

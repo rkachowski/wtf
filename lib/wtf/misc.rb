@@ -18,6 +18,41 @@ module Wtf
       nil
     end
 
+    def self.kill_zombie_children
+
+      # process id of current thread
+      parent_pid = Process.pid
+
+      # get a list of processes and children
+      process_output = `ps -eo pid,ppid,args | grep #{parent_pid} | grep -iv grep`
+
+      # break out column output into pid, parent_id, command
+      matches = process_output.scan /^\s*(\d+)\s*(\d+)\s*(.*)$/
+      return nil if matches.nil? || matches.empty?
+
+      # check for children
+      got_children = false
+      matches.each do |match|
+        next if match.size != 3
+        next if got_children == true
+        got_children = true if match[1].to_i == parent_pid
+      end
+      return nil unless got_children
+
+      # fork process
+      pid = Process.fork
+
+      if pid.nil?
+        # execute "self"
+        exec $0
+      else
+        # detach child process, kill self
+        Process.detach pid
+        Process.kill 9, Process.pid
+      end
+
+    end
+
     class FileManip < Thor
       include Thor::Actions
       add_runtime_options!

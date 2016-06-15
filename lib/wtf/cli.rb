@@ -69,6 +69,9 @@ module Wtf
         stages.inject(nil) { |previous_stage_output, stage| run_stage stage, stage_options, previous_stage_output }
 
         Wtf.log.info "\n[wtf done]"
+
+        Thread.list.each { |t| t.kill unless t == Thread.current }
+        # Util.kill_zombie_children
       end
 
       def run_stage stage, params, prev_result

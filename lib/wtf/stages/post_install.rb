@@ -6,7 +6,15 @@ module Wtf
 
         devices.each do |device|
           device.clear_logs
+
           #todo: broadcast install referral
+
+          if device.screen_active?
+            device.home
+          else
+            device.power
+            device.unlock_swipe
+          end
         end
       end
 

@@ -50,6 +50,10 @@ module Wtf
 
       Wtf.log.info "Writing results to #{filename}"
       File.open(filename,"w"){|f| f << doc.to_xml }
+
+      #todo: summarise test results to stdout
+
+      fail "Some tests failed" if outcome == :failure or outcome == :mixed
     end
 
   end

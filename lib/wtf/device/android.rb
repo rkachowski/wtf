@@ -16,7 +16,7 @@ module Wtf
       name = options[:name]
       name = name + ".png" unless name.end_with? ".png"
 
-      execute_cmd "screencap /sdcard/#{name}"
+      execute_cmd "shell screencap /sdcard/#{name}"
       execute_cmd "pull /sdcard/#{name}"
     end
 
@@ -91,6 +91,32 @@ module Wtf
       execute_cmd "install '#{apk}'"
     end
 
+    desc "menu", "press menu button on android device"
+    def menu
+      execute_cmd "shell input keyevent KEYCODE_MENU"
+    end
+
+    desc "power", "press power button"
+    def power
+      execute_cmd "shell input keyevent KEYCODE_POWER"
+    end
+
+    desc "back", "press back button"
+    def back
+      execute_cmd "shell input keyevent KEYCODE_BACK"
+    end
+
+    desc "home", "press home button"
+    def home
+      execute_cmd "shell input keyevent KEYCODE_HOME"
+    end
+
+    desc "input_pin PIN","inputs the pin and press enter"
+    def input_pin pin="0000"
+      execute_cmd "shell input text #{pin}"
+      execute_cmd "shell input keyevent KEYCODE_ENTER"
+    end
+
     desc "pull PATH","Pull a file from the path to pwd"
     def pull path, destination=Dir.pwd
       execute_cmd "pull #{path} #{destination}"
@@ -114,6 +140,28 @@ module Wtf
       @log_thread = nil
     end
 
+    desc "screen_active?", "is the screen currently active (PowerManager.isInteractive() )"
+    def screen_active?
+      parcel = execute_cmd("shell dumpsys power | grep mHoldingDisplaySuspendBlocker").first
+      puts parcel
+      matches = parcel.match /mHoldingDisplaySuspendBlocker=(\w+)/
+
+      return matches[1] == "true" if matches
+      nil
+    end
+
+    desc "unlock_swipe", "do an unlock swipe"
+    def unlock_swipe
+      resolution #make sure we have this
+
+      #swipe up the center of the screen from 20% above the bottom of the phone to 20% below the top
+      centre_x = @resolution[0] / 2
+      start_y = @resolution[1] / 10 * 8
+      end_y = @resolution[1] / 10 * 2
+      duration_ms = 300
+
+      execute_cmd "shell input swipe #{centre_x} #{start_y} #{centre_x} #{end_y} #{duration_ms}"
+    end
 no_commands do
     def self.get_package_name apk
       package_line = `aapt dump badging '#{apk}' | grep package`.chomp
@@ -176,6 +224,15 @@ no_commands do
       @arch
     end
 
+    def resolution
+      unless @resolution
+        size = execute_cmd("shell wm size").first
+        matches = size.match /(\d+)x(\d+)/
+
+        @resolution = [matches[1].to_i,matches[2].to_i] if matches
+      end
+      @resolution
+    end
     def to_s
       "#{model} (serial=#{id} api_level=#{api_level} android=#{android_version} arch=#{arch})"
     end
