@@ -1,3 +1,5 @@
+require 'fileutils'
+
 module Wtf
   class SetupAndAssertEnvironment < Stage
 
@@ -12,6 +14,10 @@ module Wtf
         fail "Can't find uvm in build environment"
       end
 
+      unless Util.is_available_in_env? "mono"
+        fail "Can't find mono in build environment"
+      end
+
       unless File.exists? "/Applications/Unity"
         fail "Can't find Unity installation at /Applications/Unity"
       end
@@ -23,6 +29,14 @@ module Wtf
 
 
     def perform
+
+      stuff_to_clean_up = Dir["*unitylog", "*apk","*xml","*logcat"]
+
+      unless stuff_to_clean_up.empty?
+        Wooget.log.info "Removing files generated from previous build - #{stuff_to_clean_up.join(", ")}"
+        FileUtils.rm(stuff_to_clean_up)
+      end
+
       uvm = UVM::CLI.new [], {}, {}
 
       Wtf.log.info "## Using unity version #{options[:unity_version]}"
@@ -37,7 +51,7 @@ module Wtf
 
       Wtf.log.info "\n## Attached Devices:"
       Wtf.log.info "  Android:"
-      Android.devices.each do |device|
+      Android.all.each do |device|
         Wtf.log.info "    #{device}"
       end
 

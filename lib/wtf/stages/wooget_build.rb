@@ -12,16 +12,6 @@ module Wtf
     def perform
       #install dependencies
       wooget = Wooget::CLI.new [], path:@package_dir, verbose:true
-      binding.pry
-
-      Wtf.log.info "Installing package dependencies to #{@package_dir}"
-      wooget.invoke "install"
-
-      #run mono tests
-      if options[:test]
-        Wtf.log.info "Running mono tests"
-        wooget.invoke "test"
-      end
 
       #build
       Wtf.log.info "Building local package #{options[:version_number]} to #{@package_dir}/bin "

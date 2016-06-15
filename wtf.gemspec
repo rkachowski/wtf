@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.homepage      = "https://github.com/wooga/wtf"
   gem.license       = "MIT"
 
-  gem.files         = Dir["{**/}{.*,*}"].select{ |path| File.file?(path) && path !~ /^pkg/ }
+  gem.files         = Dir["{**/}{.*,*}"].select{ |path| File.file?(path) && path !~ /^[pkg|scrap]/ }
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
@@ -23,8 +23,8 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency "wooga_wooget"
   gem.add_runtime_dependency "waitutil"
   gem.add_runtime_dependency "nokogiri"
+  gem.add_runtime_dependency "pry-byebug", "3.1.0"
 
-  gem.add_development_dependency "pry-byebug", "3.1.0"
   gem.add_development_dependency "rake", "10.5.0"
 
   gem.metadata['allowed_push_host'] = 'http://gem.sdk.wooga.com'
