@@ -9,12 +9,12 @@ module Wtf
 
           #todo: broadcast install referral
 
-          if device.screen_active?
-            device.home
-          else
+          unless device.screen_active?
             device.power
             device.unlock_swipe
           end
+
+          device.home
         end
       end
 

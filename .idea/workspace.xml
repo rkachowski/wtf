@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5fbe5c8a-ec64-4604-9f2f-68b53c77614a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/wtf.iml" afterPath="$PROJECT_DIR$/.idea/wtf.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/wtf/device/android.rb" afterPath="$PROJECT_DIR$/lib/wtf/device/android.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/wtf/stages/finalize_results.rb" afterPath="$PROJECT_DIR$/lib/wtf/stages/finalize_results.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/wtf/stages/setup_and_assert_environment.rb" afterPath="$PROJECT_DIR$/lib/wtf/stages/setup_and_assert_environment.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/wtf/version.rb" afterPath="$PROJECT_DIR$/lib/wtf/version.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/wtf/stages/post_install.rb" afterPath="$PROJECT_DIR$/lib/wtf/stages/post_install.rb" />
     </list>
     <ignored path="wtf.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -58,11 +53,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="android.rb" pinned="false" current-in-tab="true">
+      <file leaf-file-name="android.rb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/wtf/device/android.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.44444445">
-              <caret line="156" column="124" selection-start-line="156" selection-start-column="124" selection-end-line="156" selection-end-column="124" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="155" column="0" selection-start-line="155" selection-start-column="0" selection-end-line="155" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -76,6 +71,16 @@
               <folding>
                 <marker date="1464343072000" expanded="true" signature="30:374" placeholder=" ... end" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="post_install.rb" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/lib/wtf/stages/post_install.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.22792023">
+              <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -125,13 +130,13 @@
         <option value="$PROJECT_DIR$/lib/wtf/stages/generate_project.rb" />
         <option value="$PROJECT_DIR$/lib/wtf/version.rb" />
         <option value="$PROJECT_DIR$/lib/wtf/misc.rb" />
-        <option value="$PROJECT_DIR$/lib/wtf/stages/post_install.rb" />
         <option value="$PROJECT_DIR$/lib/wtf/stages/run_test_app.rb" />
         <option value="$PROJECT_DIR$/lib/wtf/cli.rb" />
         <option value="$USER_HOME$/.rvm/gems/ruby-2.3.0/gems/wooga_wooget-2.0.17/lib/wooget/util/misc.rb" />
         <option value="$PROJECT_DIR$/lib/wtf/stages/setup_and_assert_environment.rb" />
         <option value="$PROJECT_DIR$/lib/wtf/stages/finalize_results.rb" />
         <option value="$PROJECT_DIR$/lib/wtf/device/android.rb" />
+        <option value="$PROJECT_DIR$/lib/wtf/stages/post_install.rb" />
       </list>
     </option>
   </component>
@@ -934,14 +939,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/wtf/stages/post_install.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="10" selection-start-line="11" selection-start-column="10" selection-end-line="16" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/wtf/stages/run_test_app.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -982,6 +979,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/lib/wtf/device/android.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="155" column="0" selection-start-line="155" selection-start-column="0" selection-end-line="155" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/lib/wtf/stages/find_devices.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -992,10 +997,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/wtf/device/android.rb">
+    <entry file="file://$PROJECT_DIR$/lib/wtf/stages/post_install.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44444445">
-          <caret line="156" column="124" selection-start-line="156" selection-start-column="124" selection-end-line="156" selection-end-column="124" />
+        <state vertical-scroll-proportion="0.22792023">
+          <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
           <folding />
         </state>
       </provider>
