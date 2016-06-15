@@ -36,6 +36,8 @@ module Wtf
 
             unit_test_reports << test_outcome
         end
+
+        device.power if device.screen_active?
       end
 
       Wtf.log.info("Got #{unit_test_reports.length} test results, merging..")

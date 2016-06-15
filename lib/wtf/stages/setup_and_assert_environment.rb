@@ -49,6 +49,11 @@ module Wtf
       Wtf.log.info "\n## Build environment:\n"
       Wtf.log.info env
 
+      gems = %w{wooga_wooget wooga_uvm wooga_wtf}
+      gems.each do |gem|
+        Wtf.log.info "#{gem} version: #{Gem.loaded_specs[gem]}"
+      end
+
       Wtf.log.info "\n## Attached Devices:"
       Wtf.log.info "  Android:"
       Android.all.each do |device|

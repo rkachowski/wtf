@@ -142,11 +142,11 @@ module Wtf
 
     desc "screen_active?", "is the screen currently active (PowerManager.isInteractive() )"
     def screen_active?
-      parcel = execute_cmd("shell dumpsys power | grep mHoldingDisplaySuspendBlocker").first
+      parcel = execute_cmd("shell dumpsys power | grep mWakefulness").first
       puts parcel
-      matches = parcel.match /mHoldingDisplaySuspendBlocker=(\w+)/
+      matches = parcel.match /mWakefulness=(\w+)/
 
-      return matches[1] == "true" if matches
+      return matches[1] == "Awake" if matches
       nil
     end
 
@@ -154,7 +154,9 @@ module Wtf
     def unlock_swipe
       resolution #make sure we have this
 
-      #swipe up the center of the screen from 20% above the bottom of the phone to 20% below the top
+      return unless api_level.to_i >= 19 #duration isn't available until above android 4.3 and won't work on older devices..
+
+        #swipe up the center of the screen from 20% above the bottom of the phone to 20% below the top
       centre_x = @resolution[0] / 2
       start_y = @resolution[1] / 10 * 8
       end_y = @resolution[1] / 10 * 2
@@ -171,7 +173,7 @@ no_commands do
 
     def self.devices
       adb_output = %x{adb devices}.chomp.lines
-      devices = adb_output.map{ |l| l.scan /(^[0-9a-f]+)\s(?:device)/ }
+      devices = adb_output.map{ |l| l.scan /(^[0-9a-zA-Z]+)\s(?:device)/ }
 
       devices.select{|r| not r.empty? }.flatten
     end
@@ -226,10 +228,18 @@ no_commands do
 
     def resolution
       unless @resolution
-        size = execute_cmd("shell wm size").first
-        matches = size.match /(\d+)x(\d+)/
+        #wm is only available on android >= 19 (anything above jelly bean / 4.3.1)
+        if api_level.to_i >= 19
+          size = execute_cmd("shell wm size").first
+          matches = size.match /(\d+)x(\d+)/
 
-        @resolution = [matches[1].to_i,matches[2].to_i] if matches
+          @resolution = [matches[1].to_i,matches[2].to_i] if matches
+        else
+          size = execute_cmd("shell dumpsys window | grep init").first
+          matches = size.match /init=(\d+)x(\d+)/
+
+          @resolution = [matches[1].to_i,matches[2].to_i] if matches
+        end
       end
       @resolution
     end
