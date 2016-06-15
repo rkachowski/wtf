@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    wooga_wtf (0.1.6)
+    wooga_wtf (0.1.7)
       nokogiri
       pry-byebug (= 3.1.0)
       thor (~> 0.19)
