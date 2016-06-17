@@ -27,7 +27,7 @@ module Wtf
       devices = options[:devices]
       Wtf.log.info "Installing #{options[:path]} to #{options[:platform]} devices : #{devices.map{|a| a.options[:device]}}\n"
 
-      result = {installed_devices:[]}
+      result = {installed_devices:[], apk: options[:path]}
 
       if options[:platform] == "android"
         mutex = Mutex.new

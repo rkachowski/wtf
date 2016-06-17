@@ -1,9 +1,10 @@
 PATH
   remote: .
   specs:
-    wooga_wtf (0.1.7)
+    wooga_wtf (0.1.9)
       nokogiri
       pry-byebug (= 3.1.0)
+      rake
       thor (~> 0.19)
       waitutil
       wooga_uvm

@@ -18,8 +18,16 @@ module Wtf
         end
       end
 
-      #pass thru
-      {:installed_devices => options[:installed_devices]}
+      valid_devices = []
+      options[:installed_devices].each do |device|
+        if device.installed? options[:apk]
+          valid_devices << device
+        else
+          Wtf.log.error "Error with #{device} - #{options[:apk]} is not installed"
+        end
+      end
+
+      {:installed_devices => valid_devices}
     end
   end
 end

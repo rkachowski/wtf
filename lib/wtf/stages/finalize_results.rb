@@ -1,3 +1,5 @@
+require 'erb'
+
 module Wtf
   class FinalizeResults < Stage
     def setup
@@ -24,17 +26,23 @@ module Wtf
       unit_test_reports = []
 
       options[:test_result].each do |device, test_result|
+        logcat = test_result[:data][:log]
+        File.open("#{device.id}.logcat","w") {|f| f << logcat.join}
+
         case test_result[:status]
           when :finished
-            logcat = test_result[:data][:log]
             test_outcome = test_result[:data][:results]
-
             test_outcome.gsub!("$DEVICEID$",device.to_s.gsub(".","_"))
 
-            File.open("#{device.id}.logcat","w") {|f| f << logcat.join}
             File.open("#{device.id}-results.xml","w") {|f| f << test_outcome}
 
             unit_test_reports << test_outcome
+          when :error
+            error_report = error_report_for_device(device, test_result)
+
+            File.open("#{device.id}-results.xml","w") {|f| f << error_report}
+
+            unit_test_reports << error_report
         end
 
         device.power if device.screen_active?
@@ -53,9 +61,17 @@ module Wtf
       Wtf.log.info "Writing results to #{filename}"
       File.open(filename,"w"){|f| f << doc.to_xml }
 
-      #todo: summarise test results to stdout
+      #todo: summarise unit_test_reports to stdout
+    end
 
-      fail "Some tests failed" if outcome == :failure or outcome == :mixed
+    def error_report_for_device(device, test_result)
+      props = {case_name: "TestError",
+               platform: test_result[:data][:platform],
+               device: device.to_s.gsub(".", "_"),
+               error_message: "Device failed to complete tests #{test_result[:data][:error]}"}
+
+      erb_file = File.join(File.dirname(__FILE__), "..", "templates", "jenkins_junit_error.xml.erb")
+      error_report = ERB.new(File.open(erb_file).read).result(binding)
     end
 
   end

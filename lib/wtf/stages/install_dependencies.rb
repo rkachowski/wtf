@@ -59,7 +59,10 @@ module Wtf
       files = Dir[File.join(File.dirname(@project),"*")]
       files.delete @project
       Wtf.log.info "Copying files #{files} to #{@project}/Assets"
-      files.each { |f| FileUtils.cp_r(f, File.join(@project, "Assets"))}
+      files.each { |f|
+        binding.pry
+        FileUtils.cp_r(f, File.join(@project, "Assets"))
+      }
     end
 
     def wooget_bootstrap

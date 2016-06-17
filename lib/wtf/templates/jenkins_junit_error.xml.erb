@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="AllTheTests" tests="1" time="0.171" failures="0" errors="1" skipped="0">
+    <!-- if your classname does not include a dot, the package defaults to "(root)" -->
+    <testcase name="<%= props[:case_name] %>" classname="<%= props[:platform] %>.<%= props[:device] %>" time="69">
+       <error message="<%= props[:error_message] %>"></error>
+    </testcase>
+  </testsuite>
+</testsuites>

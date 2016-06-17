@@ -26,7 +26,7 @@ module Wtf
 
                 state_mutex.synchronize do
                   states[device][:status] = :error
-                  states[device][:data] = e.message
+                  states[device][:data] = {error: e.message, log: device.log.clone, platform: options[:platform]}
                 end
               end
             end
