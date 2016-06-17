@@ -142,7 +142,7 @@ module Wtf
 
     desc "screen_active?", "is the screen currently active (PowerManager.isInteractive() )"
     def screen_active?
-      if api_level.to_i >= 18
+      if api_level.to_i >= 17
         parcel = execute_cmd("shell dumpsys power | grep mWakefulness").first
         matches = parcel.match /mWakefulness=(\w+)/
 

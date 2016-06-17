@@ -68,7 +68,7 @@ module Wtf
       props = {case_name: "TestError",
                platform: test_result[:data][:platform],
                device: device.to_s.gsub(".", "_"),
-               error_message: "Device failed to complete tests #{test_result[:data][:error]}"}
+               error_message: "Device failed to complete tests: '#{test_result[:data][:error]}'"}
 
       erb_file = File.join(File.dirname(__FILE__), "..", "templates", "jenkins_junit_error.xml.erb")
       error_report = ERB.new(File.open(erb_file).read).result(binding)
