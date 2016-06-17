@@ -1,0 +1,51 @@
+def rvm_sh = { cmd -> sh """#!/bin/bash -l
+rvm use ruby-2.3.0;
+echo "running $cmd"
+$cmd
+"""}
+
+def exec = { cmd -> rvm_sh("bundle exec $cmd") }
+
+def setup_bundle = {
+sh """cat > Gemfile <<- EOM
+source 'http://gem.sdk.wooga.com/'
+source 'https://rubygems.org'
+gem 'wooga_wooget', '${WOOGET_VERSION}'
+gem 'wooga_wtf', '${WTF_VERSION}'
+
+EOM
+"""
+
+rvm_sh "bundle install"
+}
+
+node {
+  stage 'git checkout'
+  checkout poll: false, scm: [$class: 'GitSCM',
+      branches: [[name: "*/<%= props[:branch] %>"]],
+      doGenerateSubmoduleConfigurations: false,
+      extensions: [],
+      submoduleCfg: [],
+      userRemoteConfigs: [[credentialsId: '0f22718b-9811-4f6f-9128-d361783ff869',
+      url: "${GIT_URL}"]]]
+
+  def project_name = "${env.JOB_NAME}Tests"
+  def unity_project_path = "<%= props[:project_path] %>/${project_name}"
+
+  setup_bundle()
+  stage 'wtf - ci_setup'
+  exec "wtf ci_setup --path=<%= props[:project_path] %> --name=${project_name} --package-id=<%= props[:package_id] %>"
+
+
+  stage 'wtf - ci_build'
+  exec "wtf build --test --path=${unity_project_path} --name=${env.JOB_NAME}Tests --bundle-id='com.wooga.sdktest.${env.JOB_NAME}'"
+  fileExists "${project_name}.apk"
+
+  stage 'wtf - ci_run'
+  exec "wtf deploy_and_run --path='${project_name}.apk' --platform=android"
+
+  stage 'finalize'
+  archive '*unitylog,*xml,*logcat,*apk'
+  step([$class: 'JUnitResultArchiver', testResults: '*UnitTestResults.xml'])
+
+}

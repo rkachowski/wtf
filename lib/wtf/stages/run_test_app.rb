@@ -35,7 +35,8 @@ module Wtf
           threads.each { |t| t.join }
           devices.each { |d| d.detach_logcat }
 
-          {test_result: states}
+          failed_devices = options[:errored_devices] || {}
+          {test_result: states.merge(failed_devices)}
       end
     end
 
