@@ -57,10 +57,10 @@ module Wtf
 
     def copy_additional_files
       files = Dir[File.join(File.dirname(@project),"*")]
-      files.delete @project
+      files.delete_if {|path| path.downcase == @project.downcase }
+
       Wtf.log.info "Copying files #{files} to #{@project}/Assets"
       files.each { |f|
-        binding.pry
         FileUtils.cp_r(f, File.join(@project, "Assets"))
       }
     end

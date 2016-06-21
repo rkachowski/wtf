@@ -10,13 +10,16 @@ def setup_bundle = {
 sh """cat > Gemfile <<- EOM
 source 'http://gem.sdk.wooga.com/'
 source 'https://rubygems.org'
-gem 'wooga_wooget', '${WOOGET_VERSION}'
-gem 'wooga_wtf', '${WTF_VERSION}'
+gem 'wooga_wooget'
+gem 'wooga_wtf'
 
 EOM
 """
 
 rvm_sh "bundle install"
+rvm_sh "bundle update wooga_wtf"
+rvm_sh "bundle update wooga_wooget"
+
 }
 
 node {
