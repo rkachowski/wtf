@@ -23,7 +23,9 @@ module Wtf
 
       exitstatus, _,logname = Unity.run "-createProject '#{project_path}'"
 
-      fail(Unity.failure_reason(logname)) unless exitstatus == 0
+      failure = Unity.failure_reason(logname)
+      failure ||= "Unknown failure - check #{logname} for detail" if exitstatus != 0
+      fail(failure) if failure
     end
   end
 end

@@ -6,9 +6,9 @@ module Wtf
       path = options[:path]
 
       status, stdout, logfile = Unity.run "-buildTarget #{platform}", path
-      unless status == 0
-        fail(Unity.failure_reason(logfile))
-      end
+      failure = Unity.failure_reason(logfile)
+      failure ||= "Unknown failure - check #{logfile} for detail" if status != 0
+      fail(failure) if failure
     end
   end
 end

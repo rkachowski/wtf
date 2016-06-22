@@ -34,11 +34,9 @@ module Wtf
 
       status, _, logfile = Unity.run "-buildTarget android -executeMethod Wooga.SDKBuild.Build", path
 
-      unless status == 0
-        fail(Unity.failure_reason(logfile))
-        return
-      end
-
+      failure = Unity.failure_reason(logfile)
+      failure ||= "Unknown failure - check #{logfile} for detail" if status != 0
+      fail(failure) if failure
 
       artifact = File.join(options[:output],"#{options[:name]}.apk")
       unless File.exists?(artifact)

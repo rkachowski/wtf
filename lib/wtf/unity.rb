@@ -33,7 +33,7 @@ module Wtf
       return get_arbitrary_failure(log, arbitrary_batch_mode_fail) if arbitrary_batch_mode_fail
 
       #unknown failure
-      "Unknown failure - check #{logfile} for detail"
+      nil#"Unknown failure - check #{logfile} for detail"
     end
 
     def self.get_arbitrary_failure(log, arbitrary_batch_mode_fail)
