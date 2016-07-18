@@ -7,13 +7,14 @@ module Wtf
     end
 
     def perform
-      android = Android.all
+      platform = options[:platform] == "android" ? Android : IOS
+      devices = platform.all
 
-      Wtf.log.info "Detected android devices: \n#{android.map{|a| " "*4+a.to_s}.join("\n")}"
+      Wtf.log.info "Detected #{options[:platform]} devices: \n#{devices.map{|a| "    #{a}"}.join("\n")}"
 
-      fail("No devices found!") if android.empty?
+      fail("No devices found!") if devices.empty?
 
-      {devices: android}
+      {devices: devices}
     end
   end
 end
