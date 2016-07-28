@@ -13,28 +13,29 @@ module Wtf
       @log_mutex = Mutex.new
     end
 
-    option :name, desc: "name of the file", default:`date +"%m-%d-%y-%T%d"`.chomp, type: :string
     desc "screenshot", "Take a screenshot"
-    def screenshot
+    def screenshot name=`date +"%m-%d-%y-%T%d"`.strip
       # TODO-IOS: convert to png?
-      name = options[:name]
       name = name + ".tiff" unless name.end_with? ".tiff"
 
-      %x{idevicescreenshot -u #{self.id} #{name}}
+      %x{idevicescreenshot -u #{self.id} "#{name}"}
     end
 
     desc "installed? bundle_id", "Is a package installed on the device"
     def installed? bundle_id
-      output = %x{ideviceinstaller -u #{self.id} -l}
-      not output.empty?
+      all_apps = self.class.parse_plist %x{ideviceinstaller -u #{self.id} -l -o xml}
+      all_apps.each do |app|
+        if app["CFBundleIdentifier"] == bundle_id.strip
+          return true
+        end
+      end
+
+      false
     end
 
     desc "launch bundle_id", "Launch the application with the specified bundle id"
     def launch bundle_id
-      package_id = self.class.get_package_name(package_id) if package_id.end_with? ".apk"
-
-      app_path = get_app_path package_id
-      %x{instruments -w #{self.id} -t /Applications/Xcode.app/Contents/Applications/Instruments.app/Contents/PlugIns/AutomationInstrument.xrplugin/Contents/Resources/Automation.tracetemplate #{app_path}}
+      %x{idevicedebug -u #{self.id} run #{bundle_id}}
     end
 
     option :package_name, desc: "bundle id to be installed"
@@ -54,22 +55,17 @@ module Wtf
       %x{ideviceinstaller -u #{self.id} -i #{ipa}}
     end
 
-    desc "pull PATH","Pull a file from the path to pwd"
-    def pull path, destination=Dir.pwd
-      # TODO-IOS: write application using afc_client?
-    end
-
     desc "attach_log", "start collecting log info from device"
     def attach_log
       if @log_thread
-        Wtf.log.info "Trying to attach logcat to #{id} whilst already attached"
+        Wtf.log.info "Trying to attach log to #{id} whilst already attached"
         return
       end
 
       @log_thread = Thread.new { Wooget::Util.run_cmd("idevicesyslog -u #{options[:device]}") {|log| on_log(log) } }
     end
 
-    desc "detach_logcat", "stop grabbing logs"
+    desc "detach_log", "stop grabbing logs"
     def detach_log
       return unless @log_thread
 
@@ -116,9 +112,13 @@ no_commands do
       options[:device]
     end
 
-    def device_info property_name
-      @props ||= self.parse_plist(%x{ideviceinfo -u #{self.id}}).device_info_plist.first
-      @props[property_name]
+    def device_info property_name=nil
+      @props ||= self.class.parse_plist(%x{ideviceinfo -u #{self.id} -x})
+      if property_name
+        @props[property_name]
+      else
+        @props
+      end
     end
 
     def model
@@ -136,18 +136,10 @@ no_commands do
       @arch
     end
 
-    def resolution
-      # TODO-IOS: implement this using a good old table
-      unless @resolution
-      end
-      @resolution
-    end
-
     def to_s
       "#{model} (serial=#{id} ios_version=#{ios_version} arch=#{arch})"
     end
 end
-
 
   end
 end

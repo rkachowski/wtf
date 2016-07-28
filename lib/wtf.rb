@@ -24,6 +24,7 @@ require_relative "wtf/stages/setup_and_assert_environment"
 
 require_relative "wtf/templates"
 require_relative "wtf/device/android"
+require_relative "wtf/device/ios"
 
 require_relative "wtf/unity"
 require_relative "wtf/cli"
