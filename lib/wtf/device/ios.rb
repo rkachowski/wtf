@@ -1,5 +1,6 @@
 require 'CFPropertyList'
 require 'zip'
+require 'fileutils'
 
 module Wtf
   class IOS < Thor
@@ -11,6 +12,7 @@ module Wtf
       super
       @log = []
       @log_mutex = Mutex.new
+      @mount_point = nil
     end
 
     desc "screenshot", "Take a screenshot"
@@ -23,8 +25,7 @@ module Wtf
 
     desc "installed? bundle_id", "Is a package installed on the device"
     def installed? bundle_id
-      all_apps = self.class.parse_plist %x{ideviceinstaller -u #{self.id} -l -o xml}
-      all_apps.each do |app|
+      self.apps.each do |app|
         if app["CFBundleIdentifier"] == bundle_id.strip
           return true
         end
@@ -73,14 +74,24 @@ module Wtf
       @log_thread = nil
     end
 
+    desc "pull PATH","Pull a file from the media folder to pwd"
+    def pull path, destination=Dir.pwd
+      self.with_mount do |mount_point|
+        source = File.join(mount_point, path)
+        FileUtils.cp(source, destination)
+      end
+    end
+
+    desc "kill bundle_id/ipa", "Kill the activity with the provided package id"
+    def kill pkg
+      bundle_id = package_id.end_with?(".ipa") ? self.class.get_bundle_id(bundle_id) : pkg
+      # TODO-IOS: implement me
+      fail("not implemented")
+    end
+
 no_commands do
     def self.parse_plist str
       CFPropertyList.native_types(CFPropertyList::List.new(:data => str).value)
-    end
-
-    def self.get_app_path bundle_id
-      app_list = parse_plist(%x{ideviceinstaller -l -o xml})
-      app_list.select { |app| app["CFBundleIdentifier"] == bundle_id}.first["Path"]
     end
 
     def self.get_bundle_id ipa
@@ -100,12 +111,48 @@ no_commands do
       devices.map {|d| IOS.new([],{device: d, fresh_install: fresh_install})}
     end
 
+    def apps
+      self.class.parse_plist %x{ideviceinstaller -u #{self.id} -l -o xml}
+    end
+
+    def get_app_path bundle_id
+      self.apps.select { |app| app["CFBundleIdentifier"] == bundle_id}.first["Path"]
+    end
+
     def on_log log
       @log_mutex.synchronize { @log << log }
     end
 
     def log_contains str
       @log_mutex.synchronize { @log.any? {|line| line =~ /#{Regexp.escape(str)}/ } }
+    end
+
+    def mounted?
+      not @mount_point.nil?
+    end
+
+    def mount
+      unless self.mounted?
+        @mount_point = Dir.tmpdir
+        %x{ifuse -u #{self.id} #{@mount_point}}
+        fail("can't mount ios device #{self.id} at #{@mount_point}") unless $?.success?
+      end
+      @mount_point
+    end
+
+    def umount
+      if self.mounted?
+        %x{umount #{@mount_point}}
+        fail("can't umount ios device #{self.id} at #{@mount_point}") unless $?.success?
+        @mount_point = nil
+      end
+    end
+
+    def with_mount
+      self.mount
+      result = yield @mount_point
+      self.umount
+      result
     end
 
     def id
