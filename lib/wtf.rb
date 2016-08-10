@@ -14,6 +14,7 @@ require_relative "wtf/stages/install_dependencies"
 require_relative "wtf/stages/build_editor_assembly"
 require_relative "wtf/stages/create_test_scene"
 require_relative "wtf/stages/android_build"
+require_relative "wtf/stages/ios_build"
 require_relative "wtf/stages/find_devices"
 require_relative "wtf/stages/install_app"
 require_relative "wtf/stages/post_install"
@@ -29,6 +30,7 @@ require_relative "wtf/device/ios"
 require_relative "wtf/unity"
 require_relative "wtf/cli"
 require_relative "wtf/misc"
+require_relative "wtf/xcodebuild"
 
 module Wtf
   @@log = Logger.new(STDOUT)

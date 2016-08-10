@@ -53,7 +53,7 @@ GEM
     wooga_uvm (0.3.1)
       thor
       wooga_wooget
-    wooga_wooget (2.0.20)
+    wooga_wooget (2.0.25)
       activesupport-json_encoder
       curb (~> 0.8)
       nokogiri (~> 1.6.8)

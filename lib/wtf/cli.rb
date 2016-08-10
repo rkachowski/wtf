@@ -47,7 +47,7 @@ module Wtf
         when "android"
           stages << AndroidBuild
         when "ios"
-          puts "not implemented"
+          stages << IOSBuild
       end
 
       run_stages stages, options
@@ -58,7 +58,7 @@ module Wtf
     option :path, desc: "Path to artifact", required: true, type: :string
     option :platform, desc: "Platform to deploy to", type: :string, required: true, enum: %w(ios android)
     def deploy_and_run
-      stages = [FindDevices,InstallApp, PostInstall, RunTestApp, FinalizeResults]
+      stages = [FindDevices, InstallApp, PostInstall, RunTestApp, FinalizeResults]
 
       run_stages stages, options
     end

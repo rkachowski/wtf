@@ -51,5 +51,11 @@ module Wtf
       msg.shift
       msg.join
     end
+
+    def self.xcode_project_path logfile
+      log = File.open(logfile).read
+      match = log.match(/Building .* for iOS to (.*.proj)/)
+      match[1] if match
+    end
   end
 end
