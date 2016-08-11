@@ -55,7 +55,7 @@ module Wtf
       not output.empty?
     end
 
-    desc "clear_logs", "clear logcat on device"
+    desc "clear_logs", "clear log on device"
     def clear_logs
       execute_cmd "logcat -c"
     end
@@ -119,21 +119,25 @@ module Wtf
 
     desc "pull PATH","Pull a file from the path to pwd"
     def pull path, destination=Dir.pwd
+      #broadcast media mounted
+      device.options = device.options.merge(data_uri: "file:///mnt/sdcard")
+      device.broadcast "android.intent.action.MEDIA_MOUNTED"
+
       execute_cmd "pull #{path} #{destination}"
     end
 
-    desc "attach_logcat", "start collecting log info from device"
-    def attach_logcat
+    desc "attach_log", "start collecting log info from device"
+    def attach_log
       if @log_thread
-        Wtf.log.info "Trying to attach logcat to #{id} whilst already attached"
+        Wtf.log.info "Trying to attach log to #{id} whilst already attached"
         return
       end
 
       @log_thread = Thread.new { Wooget::Util.run_cmd("adb #{ "-s #{options[:device]} logcat" if options[:device] }") {|log| on_log(log) } }
     end
 
-    desc "detach_logcat", "stop grabbing logs"
-    def detach_logcat
+    desc "detach_log", "stop grabbing logs"
+    def detach_log
       return unless @log_thread
 
       @log_thread.exit
@@ -144,12 +148,12 @@ module Wtf
     def screen_active?
       if api_level.to_i >= 17
         parcel = execute_cmd("shell dumpsys power | grep mWakefulness").first
-        matches = parcel.match /mWakefulness=(\w+)/
+        matches = parcel.match(/mWakefulness=(\w+)/)
 
         return matches[1] == "Awake" if matches
       else
         parcel = execute_cmd("shell dumpsys power | grep mIsPowered").first
-        matches = parcel.match /mPowerState=(\d+)/
+        matches = parcel.match(/mPowerState=(\d+)/)
 
         return matches[1].to_i != 0 if matches
       end

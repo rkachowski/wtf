@@ -25,7 +25,7 @@ module Wtf
 
     desc "installed? PKG", "Is a package installed on the device"
     def installed? pkg
-      bundle_id = self.class.is_bundle_id?(pkg) ? pkg : self.class.get_bundle_id(pkg)
+      bundle_id = self.class.resolve_bundle_id(pkg)
       self.apps.each do |app|
         if app["CFBundleIdentifier"] == bundle_id.strip
           return true
@@ -84,7 +84,6 @@ module Wtf
 
     desc "kill bundle_id/ipa", "Kill the activity with the provided package id"
     def kill pkg
-      bundle_id = package_id.end_with?(".ipa") ? self.class.get_bundle_id(bundle_id) : pkg
       # TODO-IOS: implement me
       fail("not implemented")
     end
@@ -94,8 +93,8 @@ no_commands do
       CFPropertyList.native_types(CFPropertyList::List.new(:data => str).value)
     end
 
-    def self.is_bundle_id? str
-      not str.match(/[a-zA-Z0-9]+\.[a-zA-Z0-9]+\.[a-zA-Z0-9]+/).nil?
+    def self.resolve_bundle_id pkg
+      package_id.end_with?(".ipa") ? self.class.get_bundle_id(pkg) : pkg
     end
 
     def self.get_bundle_id ipa
