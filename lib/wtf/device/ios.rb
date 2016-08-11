@@ -96,7 +96,7 @@ no_commands do
 
     def self.get_bundle_id ipa
       Zip::File.open(ipa) do |zip_file|
-        zip_entry = zip_file.glob('Payload/Info.plist').first
+        zip_entry = zip_file.glob('Payload/**/Info.plist').first
         info_plist = zip_entry.get_input_stream.read
         ipa_info = parse_plist(info_plist)
         ipa_info["CFBundleIdentifier"]
