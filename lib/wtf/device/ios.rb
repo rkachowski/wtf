@@ -23,8 +23,9 @@ module Wtf
       %x{idevicescreenshot -u #{self.id} "#{name}"}
     end
 
-    desc "installed? bundle_id", "Is a package installed on the device"
-    def installed? bundle_id
+    desc "installed? PKG", "Is a package installed on the device"
+    def installed? pkg
+      bundle_id = self.class.is_bundle_id?(pkg) ? pkg : self.class.get_bundle_id(pkg)
       self.apps.each do |app|
         if app["CFBundleIdentifier"] == bundle_id.strip
           return true
@@ -34,21 +35,20 @@ module Wtf
       false
     end
 
-    desc "launch bundle_id", "Launch the application with the specified bundle id"
+    desc "launch BUNDLE_ID", "Launch the application with the specified bundle id"
     def launch bundle_id
       %x{idevicedebug -u #{self.id} run #{bundle_id}}
     end
 
-    option :package_name, desc: "bundle id to be installed"
     option :fresh_install, desc: "Should old packages be uninstalled before replacement", type: :boolean, default: true
     desc "install IPA", "install the ipa file"
     def install ipa
-      Wtf.log.info "Installing #{ipa} to #{options[:device]}..."
+      Wtf.log.info "Installing '#{ipa}' to #{options[:device]}..."
 
       if options[:fresh_install]
         bundle_id = self.class.get_bundle_id(ipa)
-        if installed? package_name
-          Wtf.log.info "#{package_name} exists on #{self.id} already, uninstalling..."
+        if installed? bundle_id
+          Wtf.log.info "#{bundle_id} exists on #{self.id} already, uninstalling..."
           %x{ideviceinstaller -u #{self.id} -U #{bundle_id}}
         end
       end
@@ -92,6 +92,10 @@ module Wtf
 no_commands do
     def self.parse_plist str
       CFPropertyList.native_types(CFPropertyList::List.new(:data => str).value)
+    end
+
+    def self.is_bundle_id? str
+      not str.match(/[a-zA-Z0-9]+\.[a-zA-Z0-9]+\.[a-zA-Z0-9]+/).nil?
     end
 
     def self.get_bundle_id ipa

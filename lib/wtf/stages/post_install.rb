@@ -6,10 +6,10 @@ module Wtf
       valid_devices = []
       invalid_devices = {}
 
-      if options[:platform] == "android"
-        devices = options[:installed_devices]
-        mutex = Mutex.new
+      devices = options[:installed_devices]
+      mutex = Mutex.new
 
+      if options[:platform] == "android"
         threads = devices.map do |device|
           Thread.new do
             begin
@@ -32,20 +32,19 @@ module Wtf
             end
           end
         end
-
         threads.each { |t| t.join }
+      end
 
-        options[:installed_devices].each do |device|
-          next if invalid_devices[device]
+      options[:installed_devices].each do |device|
+        next if invalid_devices[device]
 
-          if device.installed? options[:apk]
-            valid_devices << device
-          else
-            error_msg = "Error with #{device} - #{options[:apk]} is not installed"
+        if device.installed? options[:pkg]
+          valid_devices << device
+        else
+          error_msg = "Error with #{device} - #{options[:pkg]} is not installed"
 
-            Wtf.log.error error_msg
-            invalid_devices[device] = {status: :error, data: {platform: "android", error: error_msg}}
-          end
+          Wtf.log.error error_msg
+          invalid_devices[device] = {status: :error, data: {platform: "android", error: error_msg}}
         end
       end
 

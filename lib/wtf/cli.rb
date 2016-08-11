@@ -43,12 +43,8 @@ module Wtf
       stages = [BuildEditor]
       stages << CreateTestScene if options[:test]
 
-      case options[:platform]
-        when "android"
-          stages << AndroidBuild
-        when "ios"
-          stages << IOSBuild
-      end
+      build_stage = options[:platform] == "android" ? AndroidBuild : IOSBuild
+      stages << build_stage
 
       run_stages stages, options
     end
