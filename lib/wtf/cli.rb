@@ -9,6 +9,7 @@ module Wtf
     option :name, desc: "App name", type: :string, default: "project"
     option :path, desc: "Path to unity project", required: true, type: :string
     option :package_id, desc: "Id of the package you want to create a test project for", required: true
+    option :build, desc: "Should do a wooget build of local package", type: :boolean, default: true
     desc "make_test_project", "Generate project with package_id as dependency + install dependencies"
 
     def make_test_project
@@ -18,6 +19,8 @@ module Wtf
           GenerateProject,
           InstallDependencies
       ]
+
+      stages.delete WoogetBuild unless options[:build]
 
       run_stages stages, options
     end
@@ -72,6 +75,11 @@ module Wtf
 
       template_path = File.join(File.dirname(__FILE__), "templates","Jenkinsfile.erb")
       File.open("Jenkinsfile","w") { |f| f << ERB.new(File.open(template_path).read).result(binding) }
+    end
+
+    desc "get_source_packages","return a comma separated list of all source packages"
+    def get_source_packages
+
     end
 
     no_commands do

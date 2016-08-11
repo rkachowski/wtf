@@ -21,7 +21,7 @@ module Wtf
       @parent_package = Util.get_parent_wooget_package @project
 
       unless @parent_package
-        return fail("Couldn't find a parent wooget package dir in #{@project}")
+        Wtf.log.warn "Couldn't find a parent wooget package dir in #{@project}"
       end
     end
 
@@ -29,9 +29,9 @@ module Wtf
       copy_additional_files
       wooget_bootstrap
 
-      set_parent_dependency
+      set_parent_dependency if @parent_package
 
-      if options[:test]
+      if options[:test] and @parent_package
         copy_test_files
         set_unittest_dependency
       end
