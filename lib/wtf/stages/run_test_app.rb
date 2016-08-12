@@ -13,6 +13,7 @@ module Wtf
       states = devices.inject({}) { |hsh, d| hsh[d] = { :status => :ready }; hsh }
       state_mutex = Mutex.new
 
+      Wtf.log.info "#{devices}"
       threads = devices.map do |device|
         Thread.new do
           begin

@@ -82,19 +82,26 @@ module Wtf
       end
     end
 
+    desc "screen_active?", "is the screen currently active (PowerManager.isInteractive() )"
+    def screen_active?
+      # TODO: implement me
+      true
+    end
+ 
+    desc "power", "press power button"
+    def power
+      # TODO: implement me maybe
+    end
+
     desc "kill bundle_id/ipa", "Kill the activity with the provided package id"
     def kill pkg
-      # TODO-IOS: implement me
+      # TODO: implement me
       fail("not implemented")
     end
 
 no_commands do
     def self.parse_plist str
       CFPropertyList.native_types(CFPropertyList::List.new(:data => str).value)
-    end
-
-    def self.resolve_bundle_id pkg
-      package_id.end_with?(".ipa") ? self.class.get_bundle_id(pkg) : pkg
     end
 
     def self.get_bundle_id ipa
@@ -104,6 +111,10 @@ no_commands do
         ipa_info = parse_plist(info_plist)
         ipa_info["CFBundleIdentifier"]
       end
+    end
+
+    def self.resolve_bundle_id pkg
+      pkg.end_with?(".ipa") ? self.get_bundle_id(pkg) : pkg
     end
 
     def self.devices

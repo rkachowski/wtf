@@ -2,6 +2,10 @@ module Wtf
   class PostInstall < Stage
     POST_INSTALL_TIME_SECONDS = 60
 
+    def device_error msg
+      { :status => :error, :data => { :platform => options[:platform], :error => msg }}
+    end
+
     def perform
       valid_devices = []
       invalid_devices = {}
@@ -27,7 +31,7 @@ module Wtf
               end
             rescue Exception => e
               mutex.synchronize do
-                invalid_devices[device] = {status: :error, data: {platform: "android", error: e.message}}
+                invalid_devices[device] = device_error(e.message)
               end
             end
           end
@@ -44,7 +48,7 @@ module Wtf
           error_msg = "Error with #{device} - #{options[:pkg]} is not installed"
 
           Wtf.log.error error_msg
-          invalid_devices[device] = {status: :error, data: {platform: "android", error: error_msg}}
+          invalid_devices[device] = device_error(error_msg) 
         end
       end
 
