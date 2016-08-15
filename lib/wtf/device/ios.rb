@@ -6,12 +6,14 @@ module Wtf
   class IOS < Thor
     include Thor::Actions
     class_option :device, required: true, :desc => 'Device serial number'
-    attr_reader :log
+    attr_reader :applog, :syslog
 
     def initialize(args = [], options = {}, config = {})
       super
-      @log = []
-      @log_mutex = Mutex.new
+      @syslog = []
+      @syslog_mutex = Mutex.new
+      @applog = []
+      @applog_mutex = Mutex.new
       @mount_point = nil
     end
 
@@ -37,7 +39,8 @@ module Wtf
 
     desc "launch BUNDLE_ID", "Launch the application with the specified bundle id"
     def launch bundle_id
-      %x{idevicedebug -u #{self.id} run #{bundle_id}}
+      @app_thread = Thread.new { 
+        Wooget::Util.run_cmd("idevicedebug -u #{self.id} run #{bundle_id}") { |log| on_applog(log) }}
     end
 
     option :fresh_install, desc: "Should old packages be uninstalled before replacement", type: :boolean, default: true
@@ -58,25 +61,25 @@ module Wtf
 
     desc "attach_log", "start collecting log info from device"
     def attach_log
-      if @log_thread
+      if @syslog_thread
         Wtf.log.info "Trying to attach log to #{id} whilst already attached"
         return
       end
 
-      @log_thread = Thread.new { Wooget::Util.run_cmd("idevicesyslog -u #{options[:device]}") {|log| on_log(log) } }
+      @syslog_thread = Thread.new { Wooget::Util.run_cmd("idevicesyslog -u #{options[:device]}") {|log| on_syslog(log) } }
     end
 
     desc "detach_log", "stop grabbing logs"
     def detach_log
-      return unless @log_thread
+      return unless @syslog_thread
 
-      @log_thread.exit
-      @log_thread = nil
+      @syslog_thread.exit
+      @syslog_thread = nil
     end
 
     desc "pull PATH","Pull a file from the media folder to pwd"
-    def pull path, destination=Dir.pwd
-      self.with_mount do |mount_point|
+    def pull path, destination=Dir.pwd, bundle_id: nil
+      self.with_mount(bundle_id) do |mount_point|
         source = File.join(mount_point, path)
         FileUtils.cp(source, destination)
       end
@@ -95,8 +98,9 @@ module Wtf
 
     desc "kill bundle_id/ipa", "Kill the activity with the provided package id"
     def kill pkg
-      # TODO: implement me
-      fail("not implemented")
+      # TODO: implement me correctly
+      @app_thread.exit
+      @app_thread = nil
     end
 
 no_commands do
@@ -133,39 +137,66 @@ no_commands do
       self.apps.select { |app| app["CFBundleIdentifier"] == bundle_id}.first["Path"]
     end
 
-    def on_log log
-      @log_mutex.synchronize { @log << log }
+    def on_syslog log
+      @syslog_mutex.synchronize { @syslog << log }
+    end
+
+    def syslog_contains str
+      @syslog_mutex.synchronize { @syslog.any? {|line| line =~ /#{Regexp.escape(str)}/ } }
+    end
+
+    def on_applog log
+      @applog_mutex.synchronize { @applog << log }
+    end
+
+    def applog_contains str
+      @applog_mutex.synchronize { @applog.any? {|line| line =~ /#{Regexp.escape(str)}/ } }
+    end
+
+    def log
+      if @app_thread
+        @applog
+      elsif @syslog_thread
+        @syslog
+      end
     end
 
     def log_contains str
-      @log_mutex.synchronize { @log.any? {|line| line =~ /#{Regexp.escape(str)}/ } }
+      # TODO: review this
+      if @app_thread
+        applog_contains(str)
+      elsif @syslog_thread
+        syslog_contains(str)
+      end
     end
 
-    def mounted?
-      not @mount_point.nil?
+    def mounted?(mount_point)
+      not mount_point.nil?
     end
 
-    def mount
-      unless self.mounted?
-        @mount_point = Dir.tmpdir
-        %x{ifuse -u #{self.id} #{@mount_point}}
-        fail("can't mount ios device #{self.id} at #{@mount_point}") unless $?.success?
+    # Mounts the document folder of the app with the specified bundle id,
+    # otherwise mounts the media folder of a device. Returns the mount point folder.
+    def mount(bundle_id=nil)
+      unless self.mounted?(mount_point)
+        app_arg = bundle_id ? "--documents '#{bundle_id}'" : ""
+        mount_point = Dir.tmpdir
+        %x{ifuse #{app_arg} -u #{self.id} #{mount_point}}
+        fail("can't mount ios device #{self.id} at #{mount_point}") unless $?.success?
       end
       @mount_point
     end
 
-    def umount
-      if self.mounted?
-        %x{umount #{@mount_point}}
-        fail("can't umount ios device #{self.id} at #{@mount_point}") unless $?.success?
-        @mount_point = nil
+    def umount(mount_point)
+      if self.mounted?(mount_point)
+        %x{umount #{mount_point}}
+        fail("can't umount ios device #{self.id} at #{mount_point}") unless $?.success?
       end
     end
 
-    def with_mount
-      self.mount
-      result = yield @mount_point
-      self.umount
+    def with_mount bundle_id=nil
+      mount_point = self.mount(bundle_id)
+      result = yield(mount_point)
+      self.umount(mount_point)
       result
     end
 
