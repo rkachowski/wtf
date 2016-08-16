@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    wooga_wtf (0.1.16)
+    wooga_wtf (0.1.17)
       httpclient (~> 2.8)
       nokogiri
       pry-byebug (= 3.1.0)
