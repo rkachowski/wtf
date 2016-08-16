@@ -1,5 +1,6 @@
 require 'thor/core_ext/hash_with_indifferent_access'
-
+require 'httpclient'
+require 'json'
 module Wtf
   class CLI < Thor
     include Thor::Actions
@@ -77,9 +78,12 @@ module Wtf
       File.open("Jenkinsfile","w") { |f| f << ERB.new(File.open(template_path).read).result(binding) }
     end
 
-    desc "get_source_packages","return a comma separated list of all source packages"
-    def get_source_packages
-
+    option :secret, desc: "you sit on it, but don't take it with you", type: :string
+    desc "sdkbot ROOM MESSAGE","make sdk bot say something to a room"
+    def sdkbot room, message
+      secret = options[:secret] || ENV["SDKBOT_SECRET"]
+      msg =  HTTPClient.post("https://sdk-bot.herokuapp.com/sdk/announce", {room: room, message: message, secret:secret}.to_json,{ 'Content-Type' => 'application/json'})
+      puts msg.body
     end
 
     no_commands do

@@ -32,9 +32,13 @@ module Wtf
       arbitrary_batch_mode_fail = log.find_index { |l| l =~ /Aborting batchmode due to failure/ }
       return get_arbitrary_failure(log, arbitrary_batch_mode_fail) if arbitrary_batch_mode_fail
 
+      clashing_plugin = log.find_index { |l| l =~ /Found plugins with same names and architectures/ }
+      return log[clashing_plugin] if clashing_plugin
+
       #unknown failure
       nil#"Unknown failure - check #{logfile} for detail"
     end
+
 
     def self.get_arbitrary_failure(log, arbitrary_batch_mode_fail)
       error = log.slice(arbitrary_batch_mode_fail..-1)
