@@ -79,9 +79,17 @@ module Wtf
     end
 
     option :secret, desc: "you sit on it, but don't take it with you", type: :string
+    option :file, desc: "A file to attach, will be appended to the message in a code block"
     desc "sdkbot ROOM MESSAGE","make sdk bot say something to a room"
     def sdkbot room, message
       secret = options[:secret] || ENV["SDKBOT_SECRET"]
+
+      message = message.dup
+      if options[:file] and File.exists? options[:file]
+        message << "\n```\n"
+        message << File.open(options[:file]).read
+        message << "\n```\n"
+      end
       msg =  HTTPClient.post("https://sdk-bot.herokuapp.com/sdk/announce", {room: room, message: message, secret:secret}.to_json,{ 'Content-Type' => 'application/json'})
       puts msg.body
     end
