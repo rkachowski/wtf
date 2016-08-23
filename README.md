@@ -4,10 +4,10 @@
 
 ## Dependencies
 ### iOS device support
-* libimobiledevice and iFuse http://www.libimobiledevice.org/
+* iFuse http://www.libimobiledevice.org/
 * osxfuse https://osxfuse.github.io/
 
-`$ brew install libimobiledevice Caskroom/versions/osxfuse-beta homebrew/fuse/ifuse`
+`$ brew install Caskroom/cask/osxfuse homebrew/fuse/ifuse`
 
 ## Functionality
 
