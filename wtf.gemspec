@@ -20,9 +20,12 @@ Gem::Specification.new do |gem|
   gem.required_ruby_version = "~> 2.0"
   gem.add_runtime_dependency "thor", "~> 0.19"
   gem.add_runtime_dependency "wooga_uvm"
+  gem.add_runtime_dependency "rake","~> 10.5"
   gem.add_runtime_dependency "wooga_wooget"
   gem.add_runtime_dependency "waitutil"
+  gem.add_runtime_dependency "CFPropertyList", "2.2.8"
   gem.add_runtime_dependency "nokogiri"
+  gem.add_runtime_dependency "rubyzip"
   gem.add_runtime_dependency "pry-byebug", "3.1.0"
   gem.add_runtime_dependency "httpclient", "~> 2.8"
 
