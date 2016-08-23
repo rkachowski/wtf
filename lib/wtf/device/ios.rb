@@ -53,6 +53,7 @@ module Wtf
     option :fresh_install, desc: "Should old packages be uninstalled before replacement", type: :boolean, default: true
     desc "install IPA", "install the ipa file"
     def install ipa
+
       Wtf.log.info "Installing '#{ipa}' to #{options[:device]}..."
 
       if options[:fresh_install]

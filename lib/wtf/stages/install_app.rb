@@ -31,7 +31,7 @@ module Wtf
         Thread.new do
           begin
             Timeout.timeout(INSTALL_TIME) do
-              device.install options[:path]
+              device.install File.expand_path(options[:path])
             end
           rescue Exception => e
             Wtf.log.info "Error installing to #{options[:platform]} device #{device.options[:device]} - #{e.message}"
