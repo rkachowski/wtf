@@ -120,7 +120,7 @@ no_commands do
     end
 
     def self.devices
-      %x{idevice_id -l}.chomp.lines.select{|r| not r.empty? }.flatten.map { |d| d.strip }
+      %x{#{IMOBILEDEVICE}/idevice_id -l}.chomp.lines.select{|r| not r.empty? }.flatten.map { |d| d.strip }
     end
 
     def self.all fresh_install=true
