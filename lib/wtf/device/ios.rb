@@ -4,7 +4,7 @@ require 'fileutils'
 
 module Wtf
   class Imobiledevice
-    IMOBILEDEVICE = File.join(File.dirname(__FILE__), "..", "..", "imobiledevice", "bin")
+    IMOBILEDEVICE = File.join(File.dirname(__FILE__), "..", "..", "imobiledevice")
 
     def self.run_cmd cmd
       cmd = "./" + cmd unless cmd.start_with? "./"
@@ -130,7 +130,8 @@ no_commands do
     end
 
     def self.devices
-      output, status =Imobiledevice.run_cmd "./idevice_id -l"
+      # TODO: check for status
+      output, _ = Imobiledevice.run_cmd "./idevice_id -l"
       output.join("").chomp.lines.select{|r| not r.empty? }.flatten.map { |d| d.strip }
     end
 
@@ -139,7 +140,8 @@ no_commands do
     end
 
     def apps
-      output, status = Imobiledevice.run_cmd "ideviceinstaller -u #{self.id} -l -o xml"
+      # TODO: check for status
+      output, _ = Imobiledevice.run_cmd "ideviceinstaller -u #{self.id} -l -o xml"
 
       self.class.parse_plist output.join("")
     end
@@ -240,8 +242,8 @@ no_commands do
 
     def device_info property_name=nil
       unless @props
-
-        output, status = Imobiledevice.run_cmd  "./ideviceinfo -u #{self.id} -x"
+        # TODO: check status
+        output, _ = Imobiledevice.run_cmd  "./ideviceinfo -u #{self.id} -x"
         @props = self.class.parse_plist output.join("")
       end
 

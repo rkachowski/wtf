@@ -46,13 +46,13 @@ module Wtf
       state_mutex.synchronize { states[device][:status] = :launching }
 
       # wait for start tag
-      WaitUtil.wait_for_condition("Test Run Start") do
+      WaitUtil.wait_for_condition("Test Run Start", timeout_sec: TEST_RUN_TIME_SECONDS * 0.1) do
         device.log_contains "[TestRunStart]", bundle_id: bundle_id
       end
       state_mutex.synchronize { states[device][:status] = :running }
       Wtf.log.info "#{device.id} started test run"
       # wait for end tag
-      WaitUtil.wait_for_condition("Test Run End", timeout_sec: TEST_RUN_TIME_SECONDS - 60) do
+      WaitUtil.wait_for_condition("Test Run End", timeout_sec: TEST_RUN_TIME_SECONDS * 0.9) do
         device.log_contains "[TestRunEnd]", bundle_id: bundle_id
       end
       Wtf.log.info "#{device.id} finished test run"
