@@ -6,7 +6,7 @@ module Wtf
     def initialize options
       super
 
-      options[:unity_version] ||= "5.3.4"
+      options[:unity_version] ||= "5.4.0"
     end
 
     def setup
