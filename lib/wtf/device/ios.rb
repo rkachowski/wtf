@@ -3,8 +3,17 @@ require 'zip'
 require 'fileutils'
 
 module Wtf
-  class IOS < Thor
+  class Imobiledevice
     IMOBILEDEVICE = File.join(File.dirname(__FILE__), "..", "..", "imobiledevice", "bin")
+
+    def self.run_cmd cmd
+      cmd = "./" + cmd unless cmd.start_with? "./"
+
+      Wooget::Util.run_cmd cmd, IMOBILEDEVICE
+    end
+  end
+
+  class IOS < Thor
 
     include Thor::Actions
     class_option :device, required: true, :desc => 'Device serial number'
@@ -23,7 +32,7 @@ module Wtf
       # TODO-IOS: convert to png?
       name = name + ".tiff" unless name.end_with? ".tiff"
 
-      %x{#{IMOBILEDEVICE}/idevicescreenshot -u #{self.id} "#{name}"}
+      Imobiledevice.run_cmd "idevicescreenshot -u #{self.id} '#{name}'"
     end
 
     desc "installed? PKG", "Is a package installed on the device"
@@ -35,8 +44,8 @@ module Wtf
     desc "launch PKG", "Launch the application from the specified package"
     def launch pkg
       bundle_id = self.class.resolve_bundle_id(pkg)
-      @app_thread = Thread.new { 
-        Wooget::Util.run_cmd("#{IMOBILEDEVICE}/idevicedebug -u #{self.id} run #{bundle_id}") { |log| on_applog(bundle_id, log) }
+      @app_thread = Thread.new {
+        Imobiledevice.run_cmd("idevicedebug -u #{self.id} run #{bundle_id}") { |log| on_applog(bundle_id, log) }
       }
       bundle_id
     end
@@ -50,11 +59,11 @@ module Wtf
         bundle_id = self.class.get_bundle_id(ipa)
         if installed? bundle_id
           Wtf.log.info "#{bundle_id} exists on #{self.id} already, uninstalling..."
-          %x{#{IMOBILEDEVICE}/ideviceinstaller -u #{self.id} -U #{bundle_id}}
+          Imobiledevice.run_cmd "ideviceinstaller -u #{self.id} -U #{bundle_id}"
         end
       end
 
-      %x{#{IMOBILEDEVICE}/ideviceinstaller -u #{self.id} -i #{ipa}}
+      Imobiledevice.run_cmd "ideviceinstaller -u #{self.id} -i #{ipa}"
     end
 
     desc "attach_log", "start collecting syslog info from device"
@@ -64,7 +73,7 @@ module Wtf
         return
       end
 
-      @syslog_thread = Thread.new { Wooget::Util.run_cmd("#{IMOBILEDEVICE}/idevicesyslog -u #{options[:device]}") {|log| on_syslog(log) } }
+      @syslog_thread = Thread.new { Imobiledevice.run_cmd("idevicesyslog -u #{options[:device]}") {|log| on_syslog(log) } }
     end
 
     desc "detach_log", "stop grabbing syslog"
@@ -120,7 +129,8 @@ no_commands do
     end
 
     def self.devices
-      %x{#{IMOBILEDEVICE}/idevice_id -l}.chomp.lines.select{|r| not r.empty? }.flatten.map { |d| d.strip }
+      output, status =Imobiledevice.run_cmd "./idevice_id -l"
+      output.join("").chomp.lines.select{|r| not r.empty? }.flatten.map { |d| d.strip }
     end
 
     def self.all fresh_install=true
@@ -128,7 +138,9 @@ no_commands do
     end
 
     def apps
-      self.class.parse_plist %x{#{IMOBILEDEVICE}/ideviceinstaller -u #{self.id} -l -o xml}
+      output, status = Imobiledevice.run_cmd "ideviceinstaller -u #{self.id} -l -o xml"
+
+      self.class.parse_plist output.join("")
     end
 
     def get_app_path bundle_id
@@ -226,7 +238,12 @@ no_commands do
     end
 
     def device_info property_name=nil
-      @props ||= self.class.parse_plist(%x{#{IMOBILEDEVICE}/ideviceinfo -u #{self.id} -x})
+      unless @props
+
+        output, status = Imobiledevice.run_cmd  "./ideviceinfo -u #{self.id} -x"
+        @props = self.class.parse_plist output.join("")
+      end
+
       if property_name
         @props[property_name]
       else
