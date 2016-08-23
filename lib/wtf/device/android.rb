@@ -120,10 +120,6 @@ module Wtf
 
     desc "pull PATH","Pull a file from the path to pwd"
     def pull path, destination=Dir.pwd
-      #broadcast media mounted
-      device.options = device.options.merge(data_uri: "file:///mnt/sdcard")
-      device.broadcast "android.intent.action.MEDIA_MOUNTED"
-
       execute_cmd "pull #{path} #{destination}"
     end
 

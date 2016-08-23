@@ -63,6 +63,11 @@ module Wtf
       # grab reports
       if is_android
         device.detach_log 
+
+        #broadcast media mounted
+        device.options = device.options.merge(data_uri: "file:///mnt/sdcard")
+        device.broadcast "android.intent.action.MEDIA_MOUNTED"
+
         device.pull "/sdcard/UnitTestResults.xml", "#{device.id}-results.xml"
       else
         device.pull "UnitTestResults.xml", "#{device.id}-results.xml", bundle_id: bundle_id
