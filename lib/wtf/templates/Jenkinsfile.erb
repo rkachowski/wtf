@@ -41,7 +41,7 @@ node {
 
 
   stage 'wtf - ci_build'
-  exec "wtf build --test --path=${unity_project_path} --name=${env.JOB_NAME}Tests --bundle-id='com.wooga.sdktest.${env.JOB_NAME}'"
+  exec "wtf build --test --path=${unity_project_path} --name=${env.JOB_NAME}Tests --bundle-id='net.mantisshrimp.sdk-testapp'"
   fileExists "${project_name}.apk"
 
   stage 'wtf - ci_run'

@@ -1,5 +1,5 @@
 module Wtf
-  VERSION = "0.1.23".freeze
+  VERSION = "0.1.24".freeze
   POST_INSTALL = '
 
 

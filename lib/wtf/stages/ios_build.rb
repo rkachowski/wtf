@@ -6,7 +6,7 @@ module Wtf
         fail("Required package #{p} not installed in project #{options[:path]}") unless Wooget::Paket.installed? options[:path], p
       end
 
-      options[:bundle_id] ||= "net.wooga.sdk.#{options[:name]}"
+      options[:bundle_id] ||= "net.mantisshrimp.sdk-testapp"
     end
 
     def perform
