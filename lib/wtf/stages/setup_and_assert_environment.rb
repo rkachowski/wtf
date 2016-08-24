@@ -34,7 +34,7 @@ module Wtf
 
       unless stuff_to_clean_up.empty?
         Wooget.log.info "Removing files generated from previous build - #{stuff_to_clean_up.join(", ")}"
-        FileUtils.rm(stuff_to_clean_up)
+        FileUtils.rm_r(stuff_to_clean_up)
       end
 
       uvm = UVM::CLI.new [], {}, {}
