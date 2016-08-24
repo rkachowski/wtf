@@ -35,13 +35,13 @@ module Wtf
       check_artifact "XCode project", project
 
       # xcode -> xcarchive
-      success, xcarchive, logfile = XCodeBuild.archive(project)
-      fail("xcodebuild failure - check '#{logfile}'") unless success
+      _, xcarchive, logfile = XCodeBuild.archive(project)
+      #fail("xcodebuild failure - check '#{logfile}'") unless success
       check_artifact("XCArchive file", xcarchive)
 
       # archive -> ipa
-      success, ipa, logfile = XCodeBuild.export_archive(project, xcarchive)
-      fail("xcodebuild failure - check '#{logfile}'") unless success
+      _, ipa, logfile = XCodeBuild.export_archive(project, xcarchive)
+      #fail("xcodebuild failure - check '#{logfile}'") unless success
       check_artifact("IPA package", ipa)
     end
 

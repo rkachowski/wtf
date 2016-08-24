@@ -19,7 +19,7 @@ module Wtf
           #},
           #:method => "Development",
           #:onDemandResourcesAssetPacksBaseURL => "",
-          :teamID => "YW699TVC8Z", # TODO: check this
+          :teamID => "3LSB459Z3S", # TODO: mantis; add this to some config file
           :thinning => "<none>", # or device model
           :uploadBitcode => false,
           :uploadSymbols => false
