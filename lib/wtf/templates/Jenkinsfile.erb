@@ -39,19 +39,17 @@ node {
   try
   {
     stage 'wtf - ci_setup'
-    exec "wtf ci_setup --path=<%= props[:project_path] %> --name=${project_name} --package-id=<%= props[:package_id] %>"
+    exec "wtf ci_setup --path=unity3d/citest --name=${project_name} --package-id=Wooga.Tracking.Unity3D.Source"
+    exec "cp -r ${unity_project_path} ${unity_project_path}Android"
+    exec "cp -r ${unity_project_path} ${unity_project_path}IOS"
 
-    stage 'wtf - ci_build'
-    parallel (
-      android: {  
-        exec "wtf build --platform=android --test --path=${unity_project_path} --name=${env.JOB_NAME}Tests --bundle-id='com.wooga.sdktest.${env.JOB_NAME}'"
-        fileExists "${project_name}.apk"
-      },
-      ios: { 
-        exec "security unlock -p wooga ~/Library/Keychains/login.keychain; wtf build --platform=ios --test --path=${unity_project_path} --name=${env.JOB_NAME}Tests --bundle-id='net.mantisshrimp.sdk-testapp'"
-        fileExists "${project_name}.proj/Unity-iPhone.ipa"
-      }   
-    )
+    stage 'wtf - android ci_build'
+    exec "wtf build --platform=android --test --path=${unity_project_path}Android --name=${project_name} --bundle-id='com.wooga.sdktest.${env.JOB_NAME}'"
+    fileExists "${project_name}.apk"
+
+    stage 'wtf - ios ci_build'
+    exec "security unlock -p wooga ~/Library/Keychains/login.keychain; wtf build --platform=ios --test --path=${unity_project_path}IOS --name=${project_name} --bundle-id='net.mantisshrimp.sdk-testapp'"
+    fileExists "${project_name}.proj/Unity-iPhone.ipa"
 
     stage 'wtf - ci_run'
     parallel (
@@ -83,4 +81,5 @@ node {
       status = 'SUCCESS'
   }
 
+  exec "wtf sdkbot ${env.SLACK_NOTIFICATION_CHANNEL} '> Jenkins: \'${env.JOB_NAME}\' build ${env.BUILD_DISPLAY_NAME} result ${status} - ${env.BUILD_URL}' --secret=4B9ED666-BD28-4898-A6F5-0D75877F3EE7 --file=wtf.failure"
 }

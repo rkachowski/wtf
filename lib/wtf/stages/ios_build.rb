@@ -24,7 +24,7 @@ module Wtf
       end
 
       # unity -> xcode 
-      status, _, logfile = Unity.run "-buildTarget ios -executeMethod Wooga.SDKBuild.Build", path
+      status, _, logfile = Unity.run "-buildTarget ios -executeMethod Wooga.SDKBuild.Build", path, "ios"
 
       failure = Unity.failure_reason(logfile)
       failure ||= "Unknown failure - check #{logfile} for detail" if status != 0

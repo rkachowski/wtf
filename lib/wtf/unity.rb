@@ -3,12 +3,12 @@ module Wtf
     #todo: change this via uvm support
     DEFAULT_PATH = "/Applications/Unity/Unity.app/Contents/MacOS/Unity"
 
-    def self.logname
-      "#{Stage.current_stage}_#{Time.now.to_i}.unitylog"
+    def self.logname(platform=nil)
+      "#{Stage.current_stage}_#{platform}_#{Time.now.to_i}.unitylog"
     end
 
-    def self.run cmd, path="."
-      run_logname = self.logname
+    def self.run cmd, path=".", platform=nil
+      run_logname = self.logname(platform)
       to_run = "#{DEFAULT_PATH} -batchmode -quit -logFile #{run_logname} -projectPath #{File.expand_path(path)} #{cmd}"
       Wtf.log.info to_run
 

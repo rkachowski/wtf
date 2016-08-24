@@ -32,7 +32,7 @@ module Wtf
         Wtf.log.info ""
       end
 
-      status, _, logfile = Unity.run "-buildTarget android -executeMethod Wooga.SDKBuild.Build", path
+      status, _, logfile = Unity.run "-buildTarget android -executeMethod Wooga.SDKBuild.Build", path, "android"
 
       failure = Unity.failure_reason(logfile)
       failure ||= "Unknown failure - check #{logfile} for detail" if status != 0

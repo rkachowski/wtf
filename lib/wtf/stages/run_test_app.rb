@@ -17,7 +17,7 @@ module Wtf
         Thread.new do
           begin
             test_run_time = TEST_RUN_TIME_SECONDS
-            test_run_time *= 2 unless is_android
+            test_run_time *= 2 unless options[:platform] == "android"
 
             Timeout.timeout(test_run_time) do
               run_test_app(device, state_mutex, states)
