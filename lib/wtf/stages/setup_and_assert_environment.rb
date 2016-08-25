@@ -30,11 +30,11 @@ module Wtf
 
     def perform
 
-      stuff_to_clean_up = Dir["*unitylog", "*apk","*xml","*logcat","wtf.failure"]
+      stuff_to_clean_up = Dir["*log", "*proj", "*apk", "*xml", "*logcat", "wtf.failure"]
 
       unless stuff_to_clean_up.empty?
         Wooget.log.info "Removing files generated from previous build - #{stuff_to_clean_up.join(", ")}"
-        FileUtils.rm(stuff_to_clean_up)
+        FileUtils.rm_r(stuff_to_clean_up)
       end
 
       uvm = UVM::CLI.new [], {}, {}

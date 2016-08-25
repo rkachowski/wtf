@@ -24,7 +24,7 @@ module Wtf
       end
 
       # unity -> xcode 
-      status, _, logfile = Unity.run "-buildTarget ios -executeMethod Wooga.SDKBuild.Build", path
+      status, _, logfile = Unity.run "-buildTarget ios -executeMethod Wooga.SDKBuild.Build", path, "ios"
 
       failure = Unity.failure_reason(logfile)
       failure ||= "Unknown failure - check #{logfile} for detail" if status != 0
@@ -35,13 +35,13 @@ module Wtf
       check_artifact "XCode project", project
 
       # xcode -> xcarchive
-      success, xcarchive, logfile = XCodeBuild.archive(project)
-      fail("xcodebuild failure - check '#{logfile}'") unless success
+      _, xcarchive, logfile = XCodeBuild.archive(project)
+      #fail("xcodebuild failure - check '#{logfile}'") unless success
       check_artifact("XCArchive file", xcarchive)
 
       # archive -> ipa
-      success, ipa, logfile = XCodeBuild.export_archive(project, xcarchive)
-      fail("xcodebuild failure - check '#{logfile}'") unless success
+      _, ipa, logfile = XCodeBuild.export_archive(project, xcarchive)
+      #fail("xcodebuild failure - check '#{logfile}'") unless success
       check_artifact("IPA package", ipa)
     end
 

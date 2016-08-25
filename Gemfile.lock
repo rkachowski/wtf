@@ -1,10 +1,13 @@
 PATH
   remote: .
   specs:
-    wooga_wtf (0.1.23)
+    wooga_wtf (0.1.27)
+      CFPropertyList (= 2.2.8)
       httpclient (~> 2.8)
       nokogiri
       pry-byebug (= 3.1.0)
+      rake (~> 10.5)
+      rubyzip
       thor (~> 0.19)
       waitutil
       wooga_uvm
@@ -13,7 +16,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    CFPropertyList (2.3.2)
+    CFPropertyList (2.2.8)
     activesupport (4.2.7.1)
       i18n (~> 0.7)
       json (~> 1.7, >= 1.7.7)
@@ -74,12 +77,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  CFPropertyList
   activesupport-json_encoder
   minitest
   octokit
-  rake (= 10.5.0)
-  rubyzip
+  rake
   wooga_wtf!
 
 BUNDLED WITH
