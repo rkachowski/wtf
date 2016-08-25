@@ -1,0 +1,5 @@
+var target = UIATarget.localTarget();
+target.delay(1); // wait for splash
+
+target.setDeviceOrientation(UIA_DEVICE_ORIENTATION_LANDSCAPERIGHT);
+target.delay(<%= run_timeout - 1 %>);

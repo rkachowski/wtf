@@ -45,7 +45,7 @@ module Wtf
             unit_test_reports << error_report
         end
 
-        device.power if device.screen_active?
+        device.power if options[:plaform] == "android" and device.screen_active?
       end
 
       Wtf.log.info("Got #{unit_test_reports.length} test results, merging..")
@@ -71,7 +71,7 @@ module Wtf
                error_message: "Device failed to complete tests: '#{test_result[:data][:error]}'"}
 
       erb_file = File.join(File.dirname(__FILE__), "..", "templates", "jenkins_junit_error.xml.erb")
-      error_report = ERB.new(File.open(erb_file).read).result(binding)
+      ERB.new(File.open(erb_file).read).result(binding)
     end
 
   end

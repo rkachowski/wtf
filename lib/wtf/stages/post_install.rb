@@ -13,7 +13,8 @@ module Wtf
       devices = options[:installed_devices]
       mutex = Mutex.new
 
-      if options[:platform] == "android"
+      case options[:platform] 
+      when "android"
         threads = devices.map do |device|
           Thread.new do
             begin

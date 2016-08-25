@@ -194,7 +194,7 @@ no_commands do
       @log_mutex.synchronize { @log << log }
     end
 
-    def log_contains str, bundle_id: nil
+    def log_contains str, bundle_id=nil
       @log_mutex.synchronize { @log.any? {|line| line =~ /#{Regexp.escape(str)}/ } }
     end
 

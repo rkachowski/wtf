@@ -1,7 +1,7 @@
 module Wtf
   class RunTestApp < Stage
 
-    TEST_RUN_TIME_SECONDS = 300
+    TEST_RUN_TIME_SECONDS = 600
 
     def setup
       fail("No installed devices provided!") if options[:installed_devices].empty?
@@ -16,10 +16,7 @@ module Wtf
       threads = devices.map do |device|
         Thread.new do
           begin
-            test_run_time = TEST_RUN_TIME_SECONDS
-            test_run_time *= 2 unless options[:platform] == "android"
-
-            Timeout.timeout(test_run_time) do
+            Timeout.timeout(TEST_RUN_TIME_SECONDS) do
               run_test_app(device, state_mutex, states)
             end
           rescue Exception => e
@@ -49,17 +46,14 @@ module Wtf
       state_mutex.synchronize { states[device][:status] = :launching }
 
       # wait for start tag
-      test_run_time = TEST_RUN_TIME_SECONDS
-      test_run_time *= 2 unless is_android
-
-      WaitUtil.wait_for_condition("Test Run Start", timeout_sec: test_run_time * 0.1) do
-        device.log_contains "[TestRunStart]", bundle_id: bundle_id
+      WaitUtil.wait_for_condition("Test Run Start", timeout_sec: TEST_RUN_TIME_SECONDS * 0.1) do
+        device.log_contains "[TestRunStart]", bundle_id
       end
       state_mutex.synchronize { states[device][:status] = :running }
       Wtf.log.info "#{device.id} started test run"
       # wait for end tag
-      WaitUtil.wait_for_condition("Test Run End", timeout_sec: test_run_time * 0.9) do
-        device.log_contains "[TestRunEnd]", bundle_id: bundle_id
+      WaitUtil.wait_for_condition("Test Run End", timeout_sec: TEST_RUN_TIME_SECONDS * 0.9) do
+        device.log_contains "[TestRunEnd]", bundle_id
       end
       Wtf.log.info "#{device.id} finished test run"
 
@@ -76,11 +70,11 @@ module Wtf
 
         device.pull "/sdcard/UnitTestResults.xml", "#{device.id}-results.xml"
       else
-        device.pull "UnitTestResults.xml", "#{device.id}-results.xml", bundle_id: bundle_id
+        device.pull "UnitTestResults.xml", "#{device.id}-results.xml", bundle_id
       end
 
       state_mutex.synchronize do
-        endlog = is_android ? device.log : device.log(bundle_id: bundle_id)
+        endlog = is_android ? device.log : device.log(bundle_id)
 
         states[device][:status] = :finished
         states[device][:data] = {
