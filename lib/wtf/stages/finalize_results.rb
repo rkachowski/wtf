@@ -27,7 +27,7 @@ module Wtf
 
       options[:test_result].each do |device, test_result|
         logcat = test_result[:data][:log]
-        File.open("#{device.id}.logcat","w") {|f| f << logcat.join} if logcat
+        File.open("#{device.id}.logcat","w") {|f| f << logcat.join} if logcat and File.exists? "#{device.id}.logcat"
 
         case test_result[:status]
           when :finished
@@ -66,7 +66,7 @@ module Wtf
 
     def error_report_for_device(device, test_result)
       props = {case_name: "TestError",
-               platform: test_result[:data][:platform],
+               platform: test_result[:data][:platform].capitalize,
                device: device.to_s.gsub(".", "_"),
                error_message: "Device failed to complete tests: '#{test_result[:data][:error]}'"}
 
