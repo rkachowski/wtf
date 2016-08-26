@@ -92,6 +92,13 @@ module Wtf
       execute_cmd "install '#{apk}'"
     end
 
+    option :package_name, desc: "package name / bundle id to be installed"
+    desc "uninstall APK", "uninstall the apk file"
+    def uninstall apk
+      package_name = options[:package_name] || self.class.get_package_name(apk)
+      execute_cmd "uninstall #{package_name}" if installed? package_name
+    end
+
     desc "menu", "press menu button on android device"
     def menu
       execute_cmd "shell input keyevent KEYCODE_MENU"

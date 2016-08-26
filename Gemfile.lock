@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    wooga_wtf (0.1.30)
+    wooga_wtf (0.1.31)
       CFPropertyList (= 2.2.8)
       httpclient (~> 2.8)
       nokogiri
