@@ -59,6 +59,10 @@ module Wtf
       Android.all.each do |device|
         Wtf.log.info "    #{device}"
       end
+      Wtf.log.info "  iOS:"
+      Ios.all.each do |device|
+        Wtf.log.info "    #{device}"
+      end
 
       Wtf.log.info "\n## Wtf Options:\n"
       Wtf.log.info options

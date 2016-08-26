@@ -90,6 +90,56 @@ module Wtf
       puts msg.body
     end
 
+
+    ## device helper methods
+    ## todo: unscrew this duplication
+    option :clean, desc: "Uninstall the app if it exists already?", type: :boolean, default: true
+    desc "install FILE", "installs the app provided"
+    def install file
+      abort "Unrecognised file  '#{file}' - must be an apk or ipa file " unless file.end_with? "apk" or file.end_with? "ipa"
+
+      case
+        when file.end_with? "apk"
+          #android install
+          devices = Android.all options[:clean]
+          threads = devices.map { |d| Thread.new{ d.install(file)} }
+          threads.each {|t| t.join }
+
+        when file.end_with? "ipa"
+          #iphone install
+      end
+    end
+
+    desc "launch FILE", "launches the app from the file"
+    def launch file
+      abort "Unrecognised file  '#{file}' - must be an apk or ipa file " unless file.end_with? "apk" or file.end_with? "ipa"
+
+      case
+        when file.end_with? "apk"
+
+          devices = Android.all
+          devices.each { |d|  d.launch(file)}
+
+        when file.end_with? "ipa"
+
+      end
+    end
+
+    desc "launch FILE", "kills the app from the file"
+    def stop file
+      abort "Unrecognised file  '#{file}' - must be an apk or ipa file " unless file.end_with? "apk" or file.end_with? "ipa"
+
+      case
+        when file.end_with? "apk"
+
+          devices = Android.all
+          devices.each { |d|  d.kill(file)}
+
+        when file.end_with? "ipa"
+
+      end
+    end
+
     no_commands do
 
       def run_stages stages, stage_options
