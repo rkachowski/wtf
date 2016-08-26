@@ -29,9 +29,11 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency "pry-byebug", "3.1.0"
   gem.add_runtime_dependency "httpclient", "~> 2.8"
 
+gem.add_runtime_dependency 'activesupport-json_encoder'
 
   gem.add_development_dependency "rake", "10.5.0"
   gem.add_development_dependency "octokit"
+  gem.add_development_dependency "minitest"
 
 
   gem.metadata['allowed_push_host'] = 'http://gem.sdk.wooga.com'
