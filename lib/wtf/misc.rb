@@ -1,3 +1,5 @@
+require 'CFPropertyList'
+
 module Wtf
   module Util
     def self.is_available_in_env? prog
@@ -74,6 +76,20 @@ module Wtf
 
     def self.append_to_file filepath, str
       @@file_manip.append_to_file(File.expand_path(filepath), str)
+    end
+
+    def self.parse_plist str
+      CFPropertyList.native_types(CFPropertyList::List.new(:data => str).value)
+    end
+
+    def self.read_plist filename
+      CFPropertyList.native_types(CFPropertyList::List.new(:file => filename).value)
+    end
+
+    def self.write_plist filename, data
+      plist = CFPropertyList::List.new
+      plist.value = CFPropertyList.guess(data)
+      plist.save(filename, CFPropertyList::List::FORMAT_XML)
     end
   end
 end

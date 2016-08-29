@@ -1,4 +1,3 @@
-require 'CFPropertyList'
 require 'zip'
 require 'fileutils'
 
@@ -142,15 +141,11 @@ module Wtf
     end
 
 no_commands do
-    def self.parse_plist str
-      CFPropertyList.native_types(CFPropertyList::List.new(:data => str).value)
-    end
-
     def self.get_bundle_id ipa
       Zip::File.open(ipa) do |zip_file|
         zip_entry = zip_file.glob('Payload/*/Info.plist').first
         info_plist = zip_entry.get_input_stream.read
-        ipa_info = parse_plist(info_plist)
+        ipa_info = Util.parse_plist(info_plist)
         ipa_info["CFBundleIdentifier"]
       end
     end
@@ -173,7 +168,7 @@ no_commands do
       # TODO: check for status
       output, _ = Imobiledevice.run_cmd "ideviceinstaller -u #{self.id} -l -o xml"
 
-      self.class.parse_plist output.join("")
+      Util.parse_plist output.join("")
     end
 
     def get_app_path bundle_id
@@ -231,7 +226,7 @@ no_commands do
     # otherwise mounts the media folder of a device. Returns the mount point folder.
     def mount(bundle_id=nil)
       app_arg = bundle_id ? "--documents '#{bundle_id}'" : ""
-      mount_point = Dir.tmpdir
+      mount_point = Dir.mktmpdir("mount-#{self.id}")
       %x{ifuse #{app_arg} -u #{self.id} #{mount_point}}
       fail("can't mount ios device #{self.id} at #{mount_point}") unless $?.success?
       mount_point
@@ -262,7 +257,7 @@ no_commands do
       unless @props
         # TODO: check status
         output, _ = Imobiledevice.run_cmd  "./ideviceinfo -u #{self.id} -x"
-        @props = self.class.parse_plist output.join("")
+        @props = Util.parse_plist output.join("")
       end
 
       if property_name

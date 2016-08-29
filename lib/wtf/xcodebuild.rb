@@ -26,10 +26,7 @@ module Wtf
       }
 
       filename = File.join(path, "xcodebuild_options_#{Time.now.to_i}.plist")
-      plist = CFPropertyList::List.new
-      plist.value = CFPropertyList.guess(options)
-      plist.save(filename, CFPropertyList::List::FORMAT_XML)
-
+      Util.write_plist(filename, options)
       filename
     end
 
@@ -63,6 +60,13 @@ module Wtf
       options.map { |p| self.render_option_pair p }.join " "
     end
 
+    def self.set_plist_entry filename, key, value
+      Wtf.log.info "modifying #{filename}: #{key} = #{value}"
+      data = Util.read_plist(filename)
+      data[key] = value
+      Util.write_plist(filename, data)
+    end
+
     def self.logname name
       "#{Stage.current_stage}_#{Time.now.to_i}.xcodebuild.#{name}.log"
     end
@@ -83,6 +87,9 @@ module Wtf
     end
 
     def self.archive project
+      info_plist = File.join(project, "Info.plist")
+      self.set_plist_entry(info_plist, "UIFileSharingEnabled", true)
+
       archive = File.join(project, "#{UNITY_SCHEME}.xcarchive")
       logfile = self.logname("archive")
       options = {
