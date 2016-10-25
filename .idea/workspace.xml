@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5fbe5c8a-ec64-4604-9f2f-68b53c77614a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/wtf/stages/install_dependencies.rb" afterPath="$PROJECT_DIR$/lib/wtf/stages/install_dependencies.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/wtf/version.rb" afterPath="$PROJECT_DIR$/lib/wtf/version.rb" />
     </list>
     <ignored path="wtf.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -55,8 +56,8 @@
       <file leaf-file-name="install_dependencies.rb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/wtf/stages/install_dependencies.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="34" column="23" selection-start-line="34" selection-start-column="23" selection-end-line="34" selection-end-column="23" />
+            <state relative-caret-position="660">
+              <caret line="46" column="77" selection-start-line="46" selection-start-column="77" selection-end-line="46" selection-end-column="77" />
               <folding />
             </state>
           </provider>
@@ -85,9 +86,13 @@
       <file leaf-file-name="xcodebuild.rb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/wtf/xcodebuild.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="765">
-              <caret line="51" column="48" selection-start-line="51" selection-start-column="48" selection-end-line="51" selection-end-column="48" />
-              <folding />
+            <state relative-caret-position="825">
+              <caret line="55" column="7" selection-start-line="55" selection-start-column="7" selection-end-line="55" selection-end-column="7" />
+              <folding>
+                <marker date="1477400844000" expanded="true" signature="369:712" ph="##..." />
+                <marker date="1477400844000" expanded="true" signature="3078:3113" ph="{ ... }" />
+                <marker date="1477400844000" expanded="true" signature="3624:3658" ph="{ ... }" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -95,8 +100,8 @@
       <file leaf-file-name="ios.rb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/wtf/device/ios.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1935">
-              <caret line="129" column="8" selection-start-line="129" selection-start-column="8" selection-end-line="129" selection-end-column="8" />
+            <state relative-caret-position="1920">
+              <caret line="128" column="8" selection-start-line="128" selection-start-column="8" selection-end-line="128" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -597,7 +602,7 @@
       <workItem from="1471881647787" duration="4396000" />
       <workItem from="1472219320117" duration="1795000" />
       <workItem from="1476975909224" duration="837000" />
-      <workItem from="1477400697399" duration="123000" />
+      <workItem from="1477400697399" duration="416000" />
     </task>
     <servers />
   </component>
@@ -634,7 +639,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12342000" />
+    <option name="totallyTimeSpent" value="12635000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -965,9 +970,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/wtf/xcodebuild.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="51" column="48" selection-start-line="51" selection-start-column="48" selection-end-line="51" selection-end-column="48" />
-          <folding />
+        <state relative-caret-position="825">
+          <caret line="55" column="7" selection-start-line="55" selection-start-column="7" selection-end-line="55" selection-end-column="7" />
+          <folding>
+            <marker date="1477400844000" expanded="true" signature="369:712" ph="##..." />
+            <marker date="1477400844000" expanded="true" signature="3078:3113" ph="{ ... }" />
+            <marker date="1477400844000" expanded="true" signature="3624:3658" ph="{ ... }" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -997,8 +1006,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/wtf/device/ios.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1935">
-          <caret line="129" column="8" selection-start-line="129" selection-start-column="8" selection-end-line="129" selection-end-column="8" />
+        <state relative-caret-position="1920">
+          <caret line="128" column="8" selection-start-line="128" selection-start-column="8" selection-end-line="128" selection-end-column="8" />
           <folding />
         </state>
       </provider>
@@ -1037,8 +1046,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/wtf/stages/install_dependencies.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="34" column="23" selection-start-line="34" selection-start-column="23" selection-end-line="34" selection-end-column="23" />
+        <state relative-caret-position="660">
+          <caret line="46" column="77" selection-start-line="46" selection-start-column="77" selection-end-line="46" selection-end-column="77" />
           <folding />
         </state>
       </provider>
