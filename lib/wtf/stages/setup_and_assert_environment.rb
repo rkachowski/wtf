@@ -22,10 +22,6 @@ module Wtf
       unless File.exists? "/Applications/Unity"
         fail "Can't find Unity installation at /Applications/Unity"
       end
-
-      unless UVM::Lib.list.include? options[:unity_version]
-        fail "Can't find requested unity version - #{options[:unity_version]}, available versions are #{UVM::Lib.list.join(", ")}"
-      end
     end
 
 

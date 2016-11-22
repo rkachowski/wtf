@@ -2,14 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5fbe5c8a-ec64-4604-9f2f-68b53c77614a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/wtf/ci.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/wtf.iml" afterPath="$PROJECT_DIR$/.idea/wtf.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/wtf.rb" afterPath="$PROJECT_DIR$/lib/wtf.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/wtf/cli.rb" afterPath="$PROJECT_DIR$/lib/wtf/cli.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/wtf/unity.rb" afterPath="$PROJECT_DIR$/lib/wtf/unity.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/wtf/version.rb" afterPath="$PROJECT_DIR$/lib/wtf/version.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/wtf/stages/setup_and_assert_environment.rb" afterPath="$PROJECT_DIR$/lib/wtf/stages/setup_and_assert_environment.rb" />
     </list>
     <ignored path="wtf.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -41,8 +36,18 @@
       <file leaf-file-name="cli.rb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/wtf/cli.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="12" column="17" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wtf.gemspec" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wtf.gemspec">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="390">
+              <caret line="26" column="37" selection-start-line="26" selection-start-column="37" selection-end-line="26" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -81,8 +86,8 @@
       <file leaf-file-name="setup_and_assert_environment.rb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/wtf/stages/setup_and_assert_environment.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="795">
-              <caret line="53" column="23" selection-start-line="53" selection-start-column="23" selection-end-line="53" selection-end-column="23" />
+            <state relative-caret-position="360">
+              <caret line="24" column="7" selection-start-line="24" selection-start-column="7" selection-end-line="24" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -152,7 +157,6 @@
         <option value="$PROJECT_DIR$/lib/wtf/device/android.rb" />
         <option value="$PROJECT_DIR$/lib/wtf/stages/install_dependencies.rb" />
         <option value="$PROJECT_DIR$/../elements-of-computing-systems/projects/08/hack-vm" />
-        <option value="$PROJECT_DIR$/lib/wtf/stages/setup_and_assert_environment.rb" />
         <option value="$PROJECT_DIR$/wtf.gemspec" />
         <option value="$PROJECT_DIR$/lib/wtf/version.rb" />
         <option value="$PROJECT_DIR$/lib/wtf/stage_runner.rb" />
@@ -160,6 +164,7 @@
         <option value="$PROJECT_DIR$/lib/wtf/ci.rb" />
         <option value="$PROJECT_DIR$/lib/wtf.rb" />
         <option value="$PROJECT_DIR$/lib/wtf/cli.rb" />
+        <option value="$PROJECT_DIR$/lib/wtf/stages/setup_and_assert_environment.rb" />
       </list>
     </option>
   </component>
@@ -526,7 +531,7 @@
       <workItem from="1478172318058" duration="598000" />
       <workItem from="1479128509417" duration="549000" />
       <workItem from="1479464148080" duration="45000" />
-      <workItem from="1479819698129" duration="2667000" />
+      <workItem from="1479819698129" duration="4633000" />
     </task>
     <servers />
   </component>
@@ -563,7 +568,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16821000" />
+    <option name="totallyTimeSpent" value="18787000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -906,22 +911,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wtf.gemspec">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/wtf/stages/setup_and_assert_environment.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="795">
-          <caret line="53" column="23" selection-start-line="53" selection-start-column="23" selection-end-line="53" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/wtf/misc.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="780">
@@ -948,8 +937,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/wtf/cli.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="12" column="17" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wtf.gemspec">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="26" column="37" selection-start-line="26" selection-start-column="37" selection-end-line="26" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/wtf/stages/setup_and_assert_environment.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" column="7" selection-start-line="24" selection-start-column="7" selection-end-line="24" selection-end-column="7" />
           <folding />
         </state>
       </provider>
