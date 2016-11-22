@@ -2,6 +2,7 @@ require 'fileutils'
 
 module Wtf
   class SetupAndAssertEnvironment < Stage
+    UNITY_CONTENTS="/Applications/Unity/Unity.app/Contents"
 
     def initialize options
       super
@@ -37,11 +38,11 @@ module Wtf
         FileUtils.rm_r(stuff_to_clean_up)
       end
 
-      uvm = UVM::CLI.new [], {}, {}
-
-      Wtf.log.info "## Using unity version #{options[:unity_version]}"
-      uvm.use options[:unity_version]
-
+      plist_path = File.join(UNITY_CONTENTS,"Info.plist")
+      if File.exists? plist_path
+        version = `/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' #{plist_path}`.split("f").first
+        Wtf.log.info "Using unity version #{version}"
+      end
 
       env = ""
       Wooget::Util.run_cmd("( set -o posix ; set )") {|l| env << l}

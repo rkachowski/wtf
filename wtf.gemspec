@@ -19,7 +19,6 @@ Gem::Specification.new do |gem|
 
   gem.required_ruby_version = "~> 2.0"
   gem.add_runtime_dependency "thor", "~> 0.19"
-  gem.add_runtime_dependency "wooga_uvm"
   gem.add_runtime_dependency "rake","~> 10.5"
   gem.add_runtime_dependency "wooga_wooget"
   gem.add_runtime_dependency "waitutil"

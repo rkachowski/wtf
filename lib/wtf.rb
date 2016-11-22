@@ -1,6 +1,5 @@
 require "thor"
 require "wooget"
-require "uvm"
 require 'logger'
 require 'waitutil'
 require 'nokogiri'
@@ -28,6 +27,7 @@ require_relative "wtf/device/android"
 require_relative "wtf/device/ios"
 
 require_relative "wtf/unity"
+require_relative "wtf/stage_runner"
 require_relative "wtf/cli"
 require_relative "wtf/misc"
 require_relative "wtf/xcodebuild"

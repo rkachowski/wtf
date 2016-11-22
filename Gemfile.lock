@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    wooga_wtf (0.1.34)
+    wooga_wtf (0.1.35)
       CFPropertyList (= 2.2.8)
       activesupport-json_encoder
       httpclient (~> 2.8)
