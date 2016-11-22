@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    wooga_wtf (0.1.35)
+    wooga_wtf (0.2.0)
       CFPropertyList (= 2.2.8)
       activesupport-json_encoder
       httpclient (~> 2.8)
@@ -11,7 +11,6 @@ PATH
       rubyzip
       thor (~> 0.19)
       waitutil
-      wooga_uvm
       wooga_wooget
 
 GEM
@@ -26,27 +25,26 @@ GEM
       tzinfo (~> 1.1)
     activesupport-json_encoder (1.1.0)
       activesupport (>= 4.1.0, < 5.0)
-    addressable (2.4.0)
+    addressable (2.5.0)
+      public_suffix (~> 2.0, >= 2.0.2)
     byebug (4.0.5)
       columnize (= 0.9.0)
     coderay (1.1.1)
     columnize (0.9.0)
     curb (0.9.3)
-    faraday (0.9.2)
+    faraday (0.10.0)
       multipart-post (>= 1.2, < 3)
-    httpclient (2.8.2.2)
+    httpclient (2.8.2.4)
     i18n (0.7.0)
     json (1.8.3)
     method_source (0.8.2)
     mini_portile2 (2.1.0)
-    minitest (5.9.0)
+    minitest (5.9.1)
     multipart-post (2.0.0)
-    nokogiri (1.6.8)
+    nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
-      pkg-config (~> 1.1.7)
-    octokit (4.3.0)
-      sawyer (~> 0.7.0, >= 0.5.3)
-    pkg-config (1.1.7)
+    octokit (4.6.2)
+      sawyer (~> 0.8.0, >= 0.5.3)
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -54,21 +52,19 @@ GEM
     pry-byebug (3.1.0)
       byebug (~> 4.0)
       pry (~> 0.10)
+    public_suffix (2.0.4)
     rake (10.5.0)
     rubyzip (1.2.0)
-    sawyer (0.7.0)
-      addressable (>= 2.3.5, < 2.5)
-      faraday (~> 0.8, < 0.10)
+    sawyer (0.8.1)
+      addressable (>= 2.3.5, < 2.6)
+      faraday (~> 0.8, < 1.0)
     slop (3.6.0)
     thor (0.19.1)
     thread_safe (0.3.5)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     waitutil (0.2.1)
-    wooga_uvm (0.3.1)
-      thor
-      wooga_wooget
-    wooga_wooget (2.0.34)
+    wooga_wooget (2.0.36)
       activesupport-json_encoder (~> 1.1)
       curb (~> 0.8)
       nokogiri (~> 1.6)
@@ -85,4 +81,4 @@ DEPENDENCIES
   wooga_wtf!
 
 BUNDLED WITH
-   1.12.5
+   1.13.6

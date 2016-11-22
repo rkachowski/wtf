@@ -1,5 +1,5 @@
 module Wtf
-  VERSION = "0.1.35".freeze
+  VERSION = "0.2.0".freeze
   POST_INSTALL = '
 
 
@@ -9,7 +9,7 @@ module Wtf
 ▉╱▉╱▉╱▏┈┈▉╱▏┈┈▉▉▉▉╱
 ▉▉▉▉▉╱┈┈┈▉╱┈┈┈▉╱
 
-wdk test framework '+ VERSION
+wooget test framework '+ VERSION
 
 end
 

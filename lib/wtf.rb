@@ -31,6 +31,7 @@ require_relative "wtf/stage_runner"
 require_relative "wtf/cli"
 require_relative "wtf/misc"
 require_relative "wtf/xcodebuild"
+require_relative "wtf/ci"
 
 module Wtf
   @@log = Logger.new(STDOUT)

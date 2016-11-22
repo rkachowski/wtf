@@ -92,7 +92,7 @@ module Wtf
     option :test, desc: "Create test scene and build with test scene as root", type: :boolean, default: false
     option :output, desc: "Artifact output path", type: :string, default: Dir.pwd
     option :bundle_id, desc: "Bundle ID / Package id to use", type: :string
-    option :platform, desc: "Platform to build for", type: :string, default: "android", enum: %w(ios android)
+    option :platform, desc: "Platform to build for", type: :string,  enum: %w(ios android), required: true
     option :name, desc: "App name", type: :string, default: "project"
     option :path, desc: "Path to unity project", required: true, type: :string
     desc "build", "Build artifacts for project (.apk / .app)"
@@ -104,16 +104,16 @@ module Wtf
       build_stage = options[:platform] == "android" ? AndroidBuild : IOSBuild
       stages << build_stage
 
-      run_stages stages, options
+      StageRunner.run stages, options
     end
 
-    desc "run", "Deploy and run test artifacts on devices"
+    desc "run_tests", "Deploy and run test artifacts on devices"
     option :path, desc: "Path to artifact", required: true, type: :string
     option :platform, desc: "Platform to deploy to", type: :string, required: true, enum: %w(ios android)
-    def run
+    def run_tests
       stages = [FindDevices, InstallApp, PostInstall, RunTestApp, FinalizeResults]
 
-      run_stages stages, options
+      StageRunner.run stages, options
     end
   end
 end
