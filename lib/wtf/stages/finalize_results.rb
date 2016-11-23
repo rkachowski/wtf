@@ -27,7 +27,7 @@ module Wtf
 
       options[:test_result].each do |device, test_result|
         logcat = test_result[:data][:log]
-        File.open("#{device.id}.logcat","w") {|f| f << logcat.join} if logcat and File.exists? "#{device.id}.logcat"
+        File.open("#{device.id}.logcat","w") {|f| f << logcat.join} if logcat
 
         case test_result[:status]
           when :finished
