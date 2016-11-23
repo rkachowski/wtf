@@ -38,13 +38,13 @@ node {
   setup_bundle()
   try
   {
-    stage 'wtf - ci_setup'
-    exec "wtf ci_setup --path=unity3d/citest --name=${project_name} --package-id=Wooga.Tracking.Unity3D.Source"
+    stage 'wtf - create project'
+    exec "wtf unity create_project --path=unity3d/citest --test=true --name=${project_name} --package-id=Wooga.Tracking.Unity3D.Source"
     exec "cp -r ${unity_project_path} ${unity_project_path}Android"
     exec "cp -r ${unity_project_path} ${unity_project_path}IOS"
 
     stage 'wtf - android ci_build'
-    exec "wtf build --platform=android --test --path=${unity_project_path}Android --name=${project_name} --bundle-id='com.wooga.sdktest.${env.JOB_NAME}'"
+    exec "wtf unity build --platform=android --test --path=${unity_project_path}Android --name=${project_name} --bundle-id='com.wooga.sdktest.${env.JOB_NAME}'"
     fileExists "${project_name}.apk"
 
     stage 'wtf - ios ci_build'
@@ -54,10 +54,10 @@ node {
     stage 'wtf - ci_run'
     parallel (
       android: {  
-        exec "wtf deploy_and_run --platform=android --path='${project_name}.apk'"
+        exec "wtf unity run_tests --platform=android --path='${project_name}.apk'"
       },
       ios: { 
-        exec "wtf deploy_and_run --platform=ios --path='${project_name}.proj/Unity-iPhone.ipa'"
+        exec "wtf unity run_tests --platform=ios --path='${project_name}.proj/Unity-iPhone.ipa'"
       }   
     )
 

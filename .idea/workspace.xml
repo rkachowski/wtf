@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5fbe5c8a-ec64-4604-9f2f-68b53c77614a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/wtf.iml" afterPath="$PROJECT_DIR$/.idea/wtf.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/wtf/stages/setup_and_assert_environment.rb" afterPath="$PROJECT_DIR$/lib/wtf/stages/setup_and_assert_environment.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/wtf/templates/Jenkinsfile.erb" afterPath="$PROJECT_DIR$/lib/wtf/templates/Jenkinsfile.erb" />
     </list>
     <ignored path="wtf.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -56,7 +54,7 @@
       <file leaf-file-name="unity.rb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/wtf/unity.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-724">
+            <state relative-caret-position="0">
               <caret line="0" column="10" selection-start-line="0" selection-start-column="10" selection-end-line="0" selection-end-column="10" />
               <folding />
             </state>
@@ -143,7 +141,6 @@
         <option value="$PROJECT_DIR$/lib/wtf/templates/jenkins_junit_error.xml.erb" />
         <option value="$PROJECT_DIR$/lib/wtf/stages/post_install.rb" />
         <option value="$PROJECT_DIR$/lib/wtf/stages/run_test_app.rb" />
-        <option value="$PROJECT_DIR$/lib/wtf/templates/Jenkinsfile.erb" />
         <option value="$PROJECT_DIR$/lib/wtf/stages/android_build.rb" />
         <option value="$PROJECT_DIR$/lib/wtf/stages/build_editor_assembly.rb" />
         <option value="$PROJECT_DIR$/lib/wtf/stages/create_test_scene.rb" />
@@ -165,6 +162,7 @@
         <option value="$PROJECT_DIR$/lib/wtf.rb" />
         <option value="$PROJECT_DIR$/lib/wtf/cli.rb" />
         <option value="$PROJECT_DIR$/lib/wtf/stages/setup_and_assert_environment.rb" />
+        <option value="$PROJECT_DIR$/lib/wtf/templates/Jenkinsfile.erb" />
       </list>
     </option>
   </component>
@@ -272,6 +270,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="wtf" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wtf" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wtf" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wtf" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -531,7 +551,7 @@
       <workItem from="1478172318058" duration="598000" />
       <workItem from="1479128509417" duration="549000" />
       <workItem from="1479464148080" duration="45000" />
-      <workItem from="1479819698129" duration="4633000" />
+      <workItem from="1479819698129" duration="4979000" />
     </task>
     <servers />
   </component>
@@ -568,7 +588,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18787000" />
+    <option name="totallyTimeSpent" value="19133000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -749,13 +769,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="48" column="16" selection-start-line="48" selection-start-column="16" selection-end-line="48" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/wtf/templates/Jenkinsfile.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="26" column="47" selection-start-line="26" selection-start-column="47" selection-end-line="26" selection-end-column="47" />
         </state>
       </provider>
     </entry>
@@ -943,14 +956,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wtf.gemspec">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="26" column="37" selection-start-line="26" selection-start-column="37" selection-end-line="26" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/wtf/stages/setup_and_assert_environment.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
@@ -959,9 +964,25 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/wtf.gemspec">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="26" column="37" selection-start-line="26" selection-start-column="37" selection-end-line="26" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/wtf/templates/Jenkinsfile.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="885">
+          <caret line="59" column="33" selection-start-line="59" selection-start-column="33" selection-end-line="59" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/lib/wtf/unity.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-724">
+        <state relative-caret-position="0">
           <caret line="0" column="10" selection-start-line="0" selection-start-column="10" selection-end-line="0" selection-end-column="10" />
           <folding />
         </state>
