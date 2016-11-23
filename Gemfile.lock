@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    wooga_wtf (0.2.0)
+    wooga_wtf (0.2.1)
       CFPropertyList (= 2.2.8)
       activesupport-json_encoder
       httpclient (~> 2.8)
@@ -64,7 +64,7 @@ GEM
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     waitutil (0.2.1)
-    wooga_wooget (2.0.36)
+    wooga_wooget (2.0.37)
       activesupport-json_encoder (~> 1.1)
       curb (~> 0.8)
       nokogiri (~> 1.6)
