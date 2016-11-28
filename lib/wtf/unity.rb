@@ -95,6 +95,7 @@ module Wtf
     option :platform, desc: "Platform to build for", type: :string,  enum: %w(ios android), required: true
     option :name, desc: "App name", type: :string, default: "project"
     option :path, desc: "Path to unity project", required: true, type: :string
+    option :defines, desc:"Platform specific key value pair in form 'KEY=VALUE;KEY2=VALUE2' to be passed to compiler", type: :string
     desc "build", "Build artifacts for project (.apk / .app)"
 
     def build

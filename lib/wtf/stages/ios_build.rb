@@ -23,7 +23,7 @@ module Wtf
         Wtf.log.info ""
       end
 
-      # unity -> xcode 
+      # unity -> xcode
       status, _, logfile = Unity.run "-buildTarget ios -executeMethod Wooga.SDKBuild.Build", path, "ios"
 
       failure = Unity.failure_reason(logfile)
@@ -34,14 +34,20 @@ module Wtf
       Wtf.log.info "XCode project at '#{project}'"
       check_artifact "XCode project", project
 
+      defines = {}
+      if options[:defines]
+        values = options[:defines].split(";").map{ |s| s.split("=") }
+        values.each { |(k,v)| defines[k] = v }
+      end
+
       # xcode -> xcarchive
-      _, xcarchive, logfile = XCodeBuild.archive(project)
-      #fail("xcodebuild failure - check '#{logfile}'") unless success
+      success, xcarchive, logfile = XCodeBuild.archive(project, defines)
+      fail("xcodebuild failure - check '#{logfile}'") unless success
       check_artifact("XCArchive file", xcarchive)
 
       # archive -> ipa
-      _, ipa, logfile = XCodeBuild.export_archive(project, xcarchive)
-      #fail("xcodebuild failure - check '#{logfile}'") unless success
+      success, ipa, logfile = XCodeBuild.export_archive(project, xcarchive, defines)
+      fail("xcodebuild failure - check '#{logfile}'") unless success
       check_artifact("IPA package", ipa)
     end
 

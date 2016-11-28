@@ -73,7 +73,9 @@ module Wtf
 
     def self.run action: "", options: {}, defines: nil, dir: '.', log_suffix: nil
       log_suffix ||= action.empty? ? "empty" : action
-      defines ||= {:code_sign_identity => "iPhone Developer"}
+
+      defines ||= {}
+      defines[:code_sign_identity] = "iPhone Developer" unless defines[:code_sign_identity]
 
       logfile = File.join(Dir.pwd, self.logname(log_suffix))
 
@@ -86,7 +88,7 @@ module Wtf
       [status, output]
     end
 
-    def self.archive project
+    def self.archive project, defines={}
       info_plist = File.join(project, "Info.plist")
       self.set_plist_entry(info_plist, "UIFileSharingEnabled", true)
 
@@ -97,13 +99,13 @@ module Wtf
           :target => UNITY_TARGET,
           :archivePath => archive
       }
-      status, stdout = self.run(action: "archive", options: options, dir: project)
+      status, stdout = self.run(action: "archive", defines: defines, options: options, dir: project)
 
       success = status == 0 and stdout.any? {|l| l.match(/ARCHIVE SUCCEEDED/) }
       [success, archive, logfile]
     end
 
-    def self.export_archive project, archive, export_options=nil
+    def self.export_archive project, archive, defines={}, export_options=nil
       logfile = self.logname("export_archive")
       options = {
           :exportArchive => nil,
@@ -112,7 +114,7 @@ module Wtf
           :exportOptionsPlist => self.generate_options_plist(project, export_options)
       }
 
-       status, stdout = self.run(options: options, dir: project, log_suffix: "export_archive")
+      status, stdout = self.run(options: options, defines: defines, dir: project, log_suffix: "export_archive")
 
       success = status == 0 and stdout.any? {|l| l.match(/EXPORT SUCCEEDED/) }
 

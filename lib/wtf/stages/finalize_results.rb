@@ -61,7 +61,22 @@ module Wtf
       Wtf.log.info "Writing results to #{filename}"
       File.open(filename,"w"){|f| f << doc.to_xml }
 
-      #todo: summarise unit_test_reports to stdout
+      errors = doc.xpath("//testcase/error")
+      all_cases = doc.xpath("//testcase")
+
+      Wtf.log.info "Test Results: #{all_cases.count} tests, #{errors.count} errors"
+
+      device_names = all_cases.map{|c| c["classname"]}.uniq
+      device_names.each do |d|
+        device_cases = all_cases.css("[classname='#{d}']")
+        errored_cases = device_cases.css("testcase error")
+
+        Wtf.log.info "  #{d} - #{device_cases.count - errored_cases.count} tests run; #{errored_cases.count} failed"
+        if errored_cases.count > 0
+          Wtf.log.info "   Failures"
+          errored_cases.each {|e| Wtf.log.info "   #{e["message"]}"  }
+        end
+      end
     end
 
     def error_report_for_device(device, test_result)
