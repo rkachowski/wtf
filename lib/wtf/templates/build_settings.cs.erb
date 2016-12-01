@@ -10,8 +10,8 @@ class WTFBuildSettings
   public static string BundleId = "<%= options[:bundle_id] %>";
 
   public static readonly Dictionary<string, List<string>> PlatformDefines = new Dictionary<string, List<string>>() {
-      {"android", new List<string>(){<%= options[:defines][:android].map{|d| %("#{d}")}.join(',') %>}},
-      {"ios", new List<string>(){ <%= options[:defines][:ios].map{|d| %("#{d}")}.join(',') %>}},
+      {"android", new List<string>(){<%= options[:unity_defines][:android].map{|d| %("#{d}")}.join(',') %>}},
+      {"ios", new List<string>(){ <%= options[:unity_defines][:ios].map{|d| %("#{d}")}.join(',') %>}},
   };
 
 }

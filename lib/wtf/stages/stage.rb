@@ -52,7 +52,7 @@ module Wtf
       method_name = caller_locations(1,1)[0].label
 
       File.open("wtf.failure","w") { |f| f << msg }
-      @failure_message = "[wtf failure] #{stage_name} #{method_name.capitalize} failed - #{msg}"
+      abort "[wtf failure] #{stage_name} #{method_name.capitalize} failed - #{msg}"
     end
 
     def execute

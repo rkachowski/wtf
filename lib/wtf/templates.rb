@@ -28,15 +28,15 @@ module Wtf
         options[:output] ||= "/var/tmp"
         options[:bundle_id] ||= "net.wooga.sdk.#{options[:name]}"
 
-        options[:defines] ||={}
-        options[:defines][:ios] ||= ["CI_TESTS"]
-        options[:defines][:android] ||= ["CI_TESTS"]
+        options[:unity_defines] ||={}
+        options[:unity_defines][:ios] ||= ["CI_TESTS"]
+        options[:unity_defines][:android] ||= ["CI_TESTS"]
 
         Wooget.log.info "Bundle Id / Package - #{options[:bundle_id]}"
         Wooget.log.info "Name - #{options[:name]}"
         Wooget.log.info "OutputDir - #{options[:output]}"
-        Wooget.log.info "Android Defines - #{options[:defines][:android]}"
-        Wooget.log.info "iOS Defines - #{options[:defines][:ios]}"
+        Wooget.log.info "Android Defines - #{options[:unity_defines][:android]}"
+        Wooget.log.info "iOS Defines - #{options[:unity_defines][:ios]}"
 
         template("build_settings.cs.erb", path)
       end

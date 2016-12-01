@@ -52,15 +52,8 @@ module Wtf
     end
 
     def check_artifact name, artifact
-      unless artifact
-        fail("nil artifacts don't exist")
-        return
-      end
-
-      unless File.exists?(artifact)
-        fail("Couldn't find #{name} (expected to find '#{artifact}'")
-        return
-      end
+      fail("nil artifacts don't exist") unless artifact
+      fail("Couldn't find #{name} (expected to find '#{artifact}'") unless File.exists?(artifact)
 
       Wtf.log.info "Generated #{name} at '#{artifact}'"
       Wtf.log.info ""
