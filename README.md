@@ -1,4 +1,12 @@
-# wooget test framework
+```
+╱╱▏╱▏╱▏╱╱╱╱╱╱▏╱╱╱╱╱▏
+▉╱▉╱▉╱▏▉▉▉▉▉╱┈▉▉▉▉╱
+▉╱▉╱▉╱▏┈┈▉╱▏┈┈▉╱╱╱╱▏
+▉╱▉╱▉╱▏┈┈▉╱▏┈┈▉▉▉▉╱
+▉▉▉▉▉╱┈┈┈▉╱┈┈┈▉╱
+
+wooget test framework
+```
 
 > Make testing of wooget packages easier
 
