@@ -4,8 +4,7 @@
     <list default="true" id="5fbe5c8a-ec64-4604-9f2f-68b53c77614a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/wtf.iml" afterPath="$PROJECT_DIR$/.idea/wtf.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/wtf/version.rb" afterPath="$PROJECT_DIR$/lib/wtf/version.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/wtf/device/android.rb" afterPath="$PROJECT_DIR$/lib/wtf/device/android.rb" />
     </list>
     <ignored path="wtf.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -74,17 +73,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="android.rb" pinned="false" current-in-tab="false">
+      <file leaf-file-name="android.rb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/wtf/device/android.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1995">
-              <caret line="133" column="8" selection-start-line="133" selection-start-column="8" selection-end-line="133" selection-end-column="8" />
+            <state relative-caret-position="240">
+              <caret line="16" column="43" selection-start-line="16" selection-start-column="43" selection-end-line="16" selection-end-column="43" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="xcodebuild.rb" pinned="false" current-in-tab="true">
+      <file leaf-file-name="xcodebuild.rb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/wtf/xcodebuild.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="570">
@@ -178,7 +177,6 @@
         <option value="$PROJECT_DIR$/lib/wtf/stages/generate_project.rb" />
         <option value="$PROJECT_DIR$/lib/wtf/stages/wooget_build.rb" />
         <option value="$PROJECT_DIR$/lib/wtf/device/ios.rb" />
-        <option value="$PROJECT_DIR$/lib/wtf/device/android.rb" />
         <option value="$PROJECT_DIR$/lib/wtf/stages/install_dependencies.rb" />
         <option value="$PROJECT_DIR$/../elements-of-computing-systems/projects/08/hack-vm" />
         <option value="$PROJECT_DIR$/wtf.gemspec" />
@@ -196,6 +194,7 @@
         <option value="$PROJECT_DIR$/lib/wtf/stages/stage.rb" />
         <option value="$PROJECT_DIR$/lib/wtf/templates.rb" />
         <option value="$PROJECT_DIR$/lib/wtf/templates/build_settings.cs.erb" />
+        <option value="$PROJECT_DIR$/lib/wtf/device/android.rb" />
       </list>
     </option>
   </component>
@@ -647,7 +646,7 @@
       <workItem from="1479128509417" duration="549000" />
       <workItem from="1479464148080" duration="45000" />
       <workItem from="1479819698129" duration="13564000" />
-      <workItem from="1480600967749" duration="3136000" />
+      <workItem from="1480600967749" duration="3668000" />
     </task>
     <servers />
   </component>
@@ -684,7 +683,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30854000" />
+    <option name="totallyTimeSpent" value="31386000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1013,14 +1012,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/wtf/device/android.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1995">
-          <caret line="133" column="8" selection-start-line="133" selection-start-column="8" selection-end-line="133" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/wtf/device/ios.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2655">
@@ -1073,6 +1064,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="570">
           <caret line="38" column="19" selection-start-line="38" selection-start-column="19" selection-end-line="38" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/wtf/device/android.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="43" selection-start-line="16" selection-start-column="43" selection-end-line="16" selection-end-column="43" />
           <folding />
         </state>
       </provider>

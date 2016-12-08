@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    wooga_wtf (0.2.3)
+    wooga_wtf (0.2.4)
       CFPropertyList (= 2.2.8)
       activesupport-json_encoder
       httpclient (~> 2.8)
@@ -59,7 +59,7 @@ GEM
       addressable (>= 2.3.5, < 2.6)
       faraday (~> 0.8, < 1.0)
     slop (3.6.0)
-    thor (0.19.1)
+    thor (0.19.4)
     thread_safe (0.3.5)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)

@@ -10,6 +10,15 @@ wooget test framework
 
 > Make testing of wooget packages easier
 
+## Features
+
+* Create Unity projects
+* Install test packages
+* Build .ipa (iOS) .apk (Android) artifacts from Unity projects
+* Install + run artifacts on all attached devices in parallel
+* Collect results and collate in [Jenkins JUnit Plugin](https://wiki.jenkins-ci.org/display/JENKINS/JUnit+Plugin) compatible format
+* Also some minor convenience functions
+
 ## Dependencies
 ### iOS device support
 * iFuse http://www.libimobiledevice.org/
