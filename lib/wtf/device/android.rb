@@ -14,6 +14,7 @@ module Wtf
     desc "screenshot", "Take a screenshot"
     def screenshot
       name = options[:name]
+      name ||= `date +"%m-%d-%y-%T%d"`.chomp
       name = name + ".png" unless name.end_with? ".png"
 
       execute_cmd "shell screencap /sdcard/#{name}"
